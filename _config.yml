@@ -1,6 +1,8 @@
 # Setup
-title: 'Missing Semester'
-url: https://missing.csail.mit.edu
+title: "The Missing Semesters of Your CS"
+description: "Practical tech skills for RUET students — Linux, Git, Debugging, and more."
+url: _
+author: "The Missing Semesters of your CS @ RUET"
 
 # Settings
 markdown: kramdown
@@ -11,14 +13,16 @@ highlighter: rouge
 permalink: /:title/
 future: true
 # safe: true # breaks local rendering if enabled
-timezone: America/New_York
+timezone: Asia/Dhaka
 analytics:
   tracking_id: G-P7WVHD84D1
 
 collections:
-  '2019':
+  "2019":
     output: true
-  '2020':
+  "2020":
+    output: true
+  "2025":
     output: true
 
 # Excludes

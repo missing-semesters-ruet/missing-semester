@@ -1,8 +1,10 @@
-# The Missing Semester of Your CS Education
+# The Missing Semester of Your CS Education (RUET Edition)
 
 [![Build Status](https://github.com/missing-semester/missing-semester/actions/workflows/build.yml/badge.svg)](https://github.com/missing-semester/missing-semester/actions/workflows/build.yml) [![Links Status](https://github.com/missing-semester/missing-semester/actions/workflows/links.yml/badge.svg)](https://github.com/missing-semester/missing-semester/actions/workflows/links.yml)
 
-Website for the [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/) class!
+A fork of [MIT's Missing Semester](https://github.com/missing-semester/missing-semester) Coursework.
+
+Website for the [The Missing Semesters of Your CS Education - RUET Edition]() class!
 
 Contributions are most welcome! If you have edits or new content to add, please
 open an issue or submit a pull request.
@@ -17,7 +19,6 @@ bundle exec jekyll serve -w
 
 If you'd prefer to develop the site in a Docker container (e.g., to avoid
 having to install Ruby and dependencies on your host machine), run:
-
 
 ```bash
 docker-compose up --build
