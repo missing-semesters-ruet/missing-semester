@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/virtual-machines/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Virtual Machines and Containers" />
+  <meta property="og:title" content="Virtual Machines and Containers" />
+
+  
+
+  <title>
+      Virtual Machines and Containers &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Virtual Machines and Containers</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/LJ9ki5zq6Ik" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<h1 id="virtual-machines">Virtual Machines</h1>
+
+<p>Virtual machines are simulated computers. You can configure a guest virtual
+machine with some operating system and configuration and use it without
+affecting your host environment.</p>
+
+<p>For this class, you can use VMs to experiment with operating systems, software,
+and configurations without risk: you won’t affect your primary development
+environment.</p>
+
+<p>In general, VMs have lots of uses. They are commonly used for running software
+that only runs on a certain operating system (e.g. using a Windows VM on Linux
+to run Windows-specific software). They are often used for experimenting with
+potentially malicious software.</p>
+
+<h2 id="useful-features">Useful features</h2>
+
+<ul>
+  <li>
+    <p><strong>Isolation</strong>: hypervisors do a pretty good job of isolating the guest from
+the host, so you can use VMs to run buggy or untrusted software reasonably
+safely.</p>
+  </li>
+  <li>
+    <p><strong>Snapshots</strong>: you can take “snapshots” of your virtual machine, capturing
+the entire machine state (disk, memory, etc.), make changes to your machine,
+and then restore to an earlier state. This is useful for testing out
+potentially destructive actions, among other things.</p>
+  </li>
+</ul>
+
+<h2 id="disadvantages">Disadvantages</h2>
+
+<p>Virtual machines are generally slower than running on bare metal, so they may
+be unsuitable for certain applications.</p>
+
+<h2 id="setup">Setup</h2>
+
+<ul>
+  <li>
+    <p><strong>Resources</strong>: shared with host machine; be aware of this when allocating
+physical resources.</p>
+  </li>
+  <li>
+    <p><strong>Networking</strong>: many options, default NAT should work fine for most use
+cases.</p>
+  </li>
+  <li>
+    <p><strong>Guest addons</strong>: many hypervisors can install software in the guest to
+enable nicer integration with host system. You should use this if you can.</p>
+  </li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li>Hypervisors
+    <ul>
+      <li><a href="https://www.virtualbox.org/">VirtualBox</a> (open-source)</li>
+      <li><a href="https://virt-manager.org/">Virt-manager</a> (open-source, manages KVM virtual machines and LXC containers)</li>
+      <li><a href="https://www.vmware.com/">VMWare</a> (commercial, available from IS&amp;T <a href="https://ist.mit.edu/vmware-fusion">for
+  MIT students</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>If you are already familiar with popular hypervisors/VMs you may want to learn more about how to do this from a command line friendly way. One option is the <a href="https://wiki.libvirt.org/page/UbuntuKVMWalkthrough">libvirt</a> toolkit which allows you to manage multiple different virtualization providers/hypervisors.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<ol>
+  <li>
+    <p>Download and install a hypervisor.</p>
+  </li>
+  <li>
+    <p>Create a new virtual machine and install a Linux distribution (e.g.
+<a href="https://www.debian.org/">Debian</a>).</p>
+  </li>
+  <li>
+    <p>Experiment with snapshots. Try things that you’ve always wanted to try, like
+running <code class="language-plaintext highlighter-rouge">sudo rm -rf --no-preserve-root /</code>, and see if you can recover
+easily.</p>
+  </li>
+  <li>
+    <p>Read what a <a href="https://en.wikipedia.org/wiki/Fork_bomb">fork-bomb</a> (<code class="language-plaintext highlighter-rouge">:(){ :|:&amp; };:</code>) is and run it on the VM to see that the resource isolation (CPU, Memory, &amp;c) works.</p>
+  </li>
+  <li>
+    <p>Install guest addons and experiment with different windowing modes, file
+sharing, and other features.</p>
+  </li>
+</ol>
+
+<h1 id="containers">Containers</h1>
+
+<p>Virtual Machines are relatively heavy-weight; what if you want to spin
+up machines in an automated fashion? Enter containers!</p>
+
+<ul>
+  <li>Amazon Firecracker</li>
+  <li>Docker</li>
+  <li>rkt</li>
+  <li>lxc</li>
+</ul>
+
+<p>Containers are <em>mostly</em> just an assembly of various Linux security
+features, like virtual file system, virtual network interfaces, chroots,
+virtual memory tricks, and the like, that together give the appearance
+of virtualization.</p>
+
+<p>Not quite as secure or isolated as a VM, but pretty close and getting
+better. Usually higher performance, and much faster to start, but not
+always.</p>
+
+<p>The performance boost comes from the fact that unlike VMs which run an entire copy of the operating system, containers share the linux kernel with the host. However note that if you are running linux containers on Windows/macOS a Linux VM will need to be active as a middle layer between the two.</p>
+
+<p><img src="/2019/files/containers-vs-vms.png" alt="Docker vs VM" />
+<em>Comparison between Docker containers and Virtual Machines. Credit: blog.docker.com</em></p>
+
+<p>Containers are handy for when you want to run an automated task in a
+standardized setup:</p>
+
+<ul>
+  <li>Build systems</li>
+  <li>Development environments</li>
+  <li>Pre-packaged servers</li>
+  <li>Running untrusted programs
+    <ul>
+      <li>Grading student submissions</li>
+      <li>(Some) cloud computing</li>
+    </ul>
+  </li>
+  <li>Continuous integration
+    <ul>
+      <li>Travis CI</li>
+      <li>GitHub Actions</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Moreover, container software like Docker has also been extensively used as a solution for <a href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>. If a machine needs to be running many services with conflicting dependencies they can be isolated using containers.</p>
+
+<p>Usually, you write a file that defines how to construct your container.
+You start with some minimal <em>base image</em> (like Alpine Linux), and then
+a list of commands to run to set up the environment you want (install
+packages, copy files, build stuff, write config files, etc.). Normally,
+there’s also a way to specify any external ports that should be
+available, and an <em>entrypoint</em> that dictates what command should be run
+when the container is started (like a grading script).</p>
+
+<p>In a similar fashion to code repository websites (like <a href="https://github.com/">GitHub</a>) there are some container repository websites (like <a href="https://hub.docker.com/">DockerHub</a>)where many software services have prebuilt images that one can easily deploy.</p>
+
+<h2 id="exercises-1">Exercises</h2>
+
+<ol>
+  <li>
+    <p>Choose a container software (Docker, LXC, …) and install a simple Linux image. Try SSHing into it.</p>
+  </li>
+  <li>
+    <p>Search and download a prebuilt container image for a popular web server (nginx, apache, …)</p>
+  </li>
+</ol>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/virtual-machines.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/security/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Security and Privacy" />
+  <meta property="og:title" content="Security and Privacy" />
+
+  
+
+  <title>
+      Security and Privacy &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Security and Privacy</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/OBx_c-i-M8s" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>The world is a scary place, and everyone’s out to get you.</p>
+
+<p>Okay, maybe not, but that doesn’t mean you want to flaunt all your
+secrets. Security (and privacy) is generally all about raising the bar
+for attackers. Find out what your threat model is, and then design your
+security mechanisms around that! If the threat model is the NSA or
+Mossad, you’re <em>probably</em> going to have a bad time.</p>
+
+<p>There are <em>many</em> ways to make your technical persona more secure. We’ll
+touch on a lot of high-level things here, but this is a process, and
+educating yourself is one of the best things you can do. So:</p>
+
+<h2 id="follow-the-right-people">Follow the Right People</h2>
+
+<p>One of the best ways to improve your security know-how is to follow
+other people who are vocal about security. Some suggestions:</p>
+
+<ul>
+  <li><a href="https://twitter.com/TroyHunt">@TroyHunt</a></li>
+  <li><a href="https://twitter.com/SwiftOnSecurity">@SwiftOnSecurity</a></li>
+  <li><a href="https://twitter.com/taviso">@taviso</a></li>
+  <li><a href="https://twitter.com/thegrugq">@thegrugq</a></li>
+  <li><a href="https://twitter.com/tqbf">@tqbf</a></li>
+  <li><a href="https://twitter.com/mattblaze">@mattblaze</a></li>
+  <li><a href="https://twitter.com/moxie">@moxie</a></li>
+</ul>
+
+<p>See also <a href="https://heimdalsecurity.com/blog/best-twitter-cybersec-accounts/">this
+list</a>
+for more suggestions.</p>
+
+<h2 id="general-security-advice">General Security Advice</h2>
+
+<p>Tech Solidarity has a pretty great list of <a href="https://web.archive.org/web/20221123204419/https://techsolidarity.org/resources/basic_security.htm">do’s and don’ts for
+journalists</a>
+that has a lot of sane advice, and is decently up-to-date. <a href="https://medium.com/@thegrugq">@thegrugq</a>
+also has a good blog post on <a href="https://medium.com/@thegrugq/stop-fabricating-travel-security-advice-35259bf0e869">travel security
+advice</a>
+that’s worth reading. We’ll repeat much of the advice from those sources
+here, plus some more. Also, get a <a href="https://www.amazon.com/dp/B00QRRZ2QM/">USB data
+blocker</a>, because <a href="https://www.bleepingcomputer.com/news/security/heres-a-list-of-29-different-types-of-usb-attacks/">USB is
+scary</a>.</p>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>The very first thing you should do, if you haven’t already, is download
+a password manager. Some good ones are:</p>
+
+<ul>
+  <li><a href="https://1password.com/">1password</a></li>
+  <li><a href="https://keepass.info/">KeePass</a></li>
+  <li><a href="https://bitwarden.com/">BitWarden</a></li>
+  <li><a href="https://git.zx2c4.com/password-store/about/"><code class="language-plaintext highlighter-rouge">pass</code></a></li>
+</ul>
+
+<p>If you’re particularly paranoid, use one that encrypts the passwords
+locally on your computer, as opposed to storing them in plain-text at
+the server. Use it to generate passwords
+for all the web sites you care about right now. Then, switch on
+two-factor authentication, ideally with a
+<a href="https://fidoalliance.org/">FIDO/U2F</a> dongle (a
+<a href="https://www.yubico.com/quiz/">YubiKey</a> for example, which has <a href="https://www.yubico.com/why-yubico/for-education/">20% off
+for students</a>). TOTP
+(like Google Authenticator or Duo) will also work in a pinch, but
+<a href="https://twitter.com/taviso/status/1082015009348104192">doesn’t protect against
+phishing</a>. SMS is
+pretty much useless unless your threat model only includes random
+strangers picking up your password in transit.</p>
+
+<p>Also, a note about paper keys. Often, services will give you a “backup
+key” that you can use as a second factor if you lose your real second
+factor (btw, always keep a backup dongle somewhere safe!). While you
+<em>can</em> stick those in your password managers, that means that should
+someone get access to your password manager, you’re totally hosed (but
+maybe you’re okay with that thread model). If you are truly paranoid,
+print out these paper keys, never store them digitally, and place them
+in a safe in the real world.</p>
+
+<h2 id="private-communication">Private Communication</h2>
+
+<p>Use <a href="https://www.signal.org/">Signal</a> (<a href="https://medium.com/@mshelton/signal-for-beginners-c6b44f76a1f0">setup
+instructions</a>.
+<a href="https://wire.com/en/">Wire</a> is <a href="https://www.securemessagingapps.com/">fine
+too</a>; WhatsApp is okay; <a href="https://twitter.com/bascule/status/897187286554628096">don’t use
+Telegram</a>).
+Desktop messengers are pretty broken (partially due to usually relying
+on Electron, which is a huge trust stack).</p>
+
+<p>E-mail is particularly problematic, even if PGP signed. It’s not
+generally forward-secure, and the key-distribution problem is pretty
+severe. <a href="https://keybase.io/">keybase.io</a> helps, and is useful for a
+number of other reasons. Also, PGP keys are generally handled on desktop
+computers, which is one of the least secure computing environments.
+Relatedly, consider getting a Chromebook, or just work on a tablet with
+a keyboard.</p>
+
+<h2 id="file-security">File Security</h2>
+
+<p>File security is hard, and operates on many level. What is it you’re
+trying to secure against?</p>
+
+<p><a href="https://xkcd.com/538/"><img src="https://imgs.xkcd.com/comics/security.png" alt="$5 wrench" /></a></p>
+
+<ul>
+  <li>Offline attacks (someone steals your laptop while it’s off): turn on
+full disk encryption. (<a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_a_non-root_file_system">cryptsetup +
+LUKS</a>
+on Linux,
+<a href="https://fossbytes.com/enable-full-disk-encryption-windows-10/">BitLocker</a>
+on Windows, <a href="https://support.apple.com/en-us/HT204837">FileVault</a> on
+macOS. Note that this won’t help if the attacker <em>also</em> has you and
+really wants your secrets.</li>
+  <li>Online attacks (someone has your laptop and it’s on): use file
+encryption. There are two primary mechanisms for doing so
+    <ul>
+      <li>Encrypted filesystems: stacked filesystem encryption software encrypts files individually rather than having encrypted block devices. You can “mount” these filesystems by providing the decryption key, and then browse the files inside it freely. When you unmount it, those files are all unavailable.  Modern solutions include <a href="https://github.com/rfjakob/gocryptfs">gocryptfs</a> and <a href="http://ecryptfs.org/">eCryptFS</a>. More detailed comparisons can be found <a href="https://nuetzlich.net/gocryptfs/comparison/">here</a> and <a href="https://wiki.archlinux.org/index.php/disk_encryption#Comparison_table">here</a></li>
+      <li>Encrypted files: encrypt individual files with symmetric
+encryption (see <code class="language-plaintext highlighter-rouge">gpg -c</code>) and a secret key. Or, like <code class="language-plaintext highlighter-rouge">pass</code>, also
+encrypt the key with your public key so only you can read it back
+later with your private key. Exact encryption settings matter a
+lot!</li>
+    </ul>
+  </li>
+  <li><a href="https://en.wikipedia.org/wiki/Plausible_deniability">Plausible
+deniability</a>
+(what seems to be the problem officer?): usually lower performance,
+and easier to lose data. Hard to actually prove that it provides
+<a href="https://en.wikipedia.org/wiki/Deniable_encryption">deniable
+encryption</a>! See
+the <a href="https://security.stackexchange.com/questions/135846/is-plausible-deniability-actually-feasible-for-encrypted-volumes-disks">discussion
+here</a>,
+and then consider whether you may want to try
+<a href="https://www.veracrypt.fr/en/Home.html">VeraCrypt</a> (the maintained
+fork of good ol’ TrueCrypt).</li>
+  <li>Encrypted backups: use <a href="https://www.tarsnap.com/">Tarsnap</a> or <a href="https://www.borgbase.com/">Borgbase</a>
+    <ul>
+      <li>Think about whether an attacker can delete your backups if they
+get a hold of your laptop!</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="internet-security--privacy">Internet Security &amp; Privacy</h2>
+
+<p>The internet is a <em>very</em> scary place. Open WiFi networks
+<a href="https://www.troyhunt.com/the-beginners-guide-to-breaking-website/">are</a>
+<a href="https://www.troyhunt.com/talking-with-scott-hanselman-on/">scary</a>. Make
+sure you delete them afterwards, otherwise your phone will happily
+announce and re-connect to something with the same name later!</p>
+
+<p>If you’re ever on a network you don’t trust, a VPN <em>may</em> be worthwhile,
+but keep in mind that you’re trusting the VPN provider <em>a lot</em>. Do you
+really trust them more than your ISP? If you truly want a VPN, use a
+provider you’re sure you trust, and you should probably pay for it. Or
+set up <a href="https://www.wireguard.com/">WireGuard</a> for yourself – it’s
+<a href="https://web.archive.org/web/20210526211307/https://latacora.micro.blog/there-will-be/">excellent</a>!</p>
+
+<p>There are also secure configuration settings for a lot of internet-enabled
+applications at <a href="https://cipherlist.eu/">cipherlist.eu</a>. If you’re particularly
+privacy-oriented, <a href="https://privacytools.io">privacytools.io</a> is also a good
+resource.</p>
+
+<p>Some of you may wonder about <a href="https://www.torproject.org/">Tor</a>. Keep in
+mind that Tor is <em>not</em> particularly resistant to powerful global
+attackers, and is weak against traffic analysis attacks. It may be
+useful for hiding traffic on a small scale, but won’t really buy you all
+that much in terms of privacy. You’re better off using more secure
+services in the first place (Signal, TLS + certificate pinning, etc.).</p>
+
+<h2 id="web-security">Web Security</h2>
+
+<p>So, you want to go on the Web too?
+Jeez, you’re really pushing your luck here.</p>
+
+<p>Install <a href="https://www.eff.org/https-everywhere">HTTPS Everywhere</a>.
+SSL/TLS is
+<a href="https://www.troyhunt.com/ssl-is-not-about-encryption/">critical</a>, and
+it’s <em>not</em> just about encryption, but also about being able to verify
+that you’re talking to the right service in the first place! If you run
+your own web server, <a href="https://www.ssllabs.com/ssltest/index.html">test it</a>. TLS configuration
+<a href="https://wiki.mozilla.org/Security/Server_Side_TLS">can get hairy</a>.
+HTTPS Everywhere will do its very best to never navigate you to HTTP
+sites when there’s an alternative. That doesn’t save you, but it helps.
+If you’re truly paranoid, blacklist any SSL/TLS CAs that you don’t
+absolutely need.</p>
+
+<p>Install <a href="https://github.com/gorhill/uBlock">uBlock Origin</a>. It is a
+<a href="https://github.com/gorhill/uBlock/wiki/Blocking-mode">wide-spectrum
+blocker</a> that
+doesn’t just stop ads, but all sorts of third-party communication a page
+may try to do. And inline scripts and such. If you’re willing to spend
+some time on configuration to make things work, go to <a href="https://github.com/gorhill/uBlock/wiki/Blocking-mode:-medium-mode">medium
+mode</a>
+or even <a href="https://github.com/gorhill/uBlock/wiki/Blocking-mode:-hard-mode">hard
+mode</a>.
+Those <em>will</em> make some sites not work until you’ve fiddled with the
+settings enough, but will also significantly improve your online
+security.</p>
+
+<p>If you’re using Firefox, enable <a href="https://support.mozilla.org/en-US/kb/containers">Multi-Account
+Containers</a>. Create
+separate containers for social networks, banking, shopping, etc. Firefox
+will keep the cookies and other state for each of the containers totally
+separate, so sites you visit in one container can’t snoop on sensitive
+data from the others. In Google Chrome, you can use <a href="https://support.google.com/chrome/answer/2364824">Chrome
+Profiles</a> to achieve
+similar results.</p>
+
+<p>Exercises</p>
+
+<p>TODO</p>
+
+<ol>
+  <li>Encrypt a file using PGP</li>
+  <li>Use veracrypt to create a simple encrypted volume</li>
+  <li>Enable 2FA for your most data sensitive accounts i.e. GMail, Dropbox, Github, &amp;c</li>
+</ol>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/security.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

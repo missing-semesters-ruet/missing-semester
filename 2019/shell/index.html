@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/shell/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Shell and Scripting" />
+  <meta property="og:title" content="Shell and Scripting" />
+
+  
+
+  <title>
+      Shell and Scripting &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Shell and Scripting</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/dbDRfmH5uSI" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>The shell is an efficient, textual interface to your computer.</p>
+
+<p>The shell prompt: what greets you when you open a terminal.
+Lets you run programs and commands; common ones are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">cd</code> to change directory</li>
+  <li><code class="language-plaintext highlighter-rouge">ls</code> to list files and directories</li>
+  <li><code class="language-plaintext highlighter-rouge">mv</code> and <code class="language-plaintext highlighter-rouge">cp</code> to move and copy files</li>
+</ul>
+
+<p>But the shell lets you do <em>so</em> much more; you can invoke any program on
+your computer, and command-line tools exist for doing pretty much
+anything you may want to do. And they’re often more efficient than their
+graphical counterparts. We’ll go through a bunch of those in this class.</p>
+
+<p>The shell provides an interactive programming language (“scripting”).
+There are many shells:</p>
+
+<ul>
+  <li>You’ve probably used <code class="language-plaintext highlighter-rouge">sh</code> or <code class="language-plaintext highlighter-rouge">bash</code>.</li>
+  <li>Also shells that match languages: <code class="language-plaintext highlighter-rouge">csh</code>.</li>
+  <li>Or “better” shells: <code class="language-plaintext highlighter-rouge">fish</code>, <code class="language-plaintext highlighter-rouge">zsh</code>, <code class="language-plaintext highlighter-rouge">ksh</code>.</li>
+</ul>
+
+<p>In this class we’ll focus on the ubiquitous <code class="language-plaintext highlighter-rouge">sh</code> and <code class="language-plaintext highlighter-rouge">bash</code>, but feel
+free to play around with others. I like <code class="language-plaintext highlighter-rouge">fish</code>.</p>
+
+<p>Shell programming is a <em>very</em> useful tool in your toolbox.
+Can either write programs directly at the prompt, or into a file.
+<code class="language-plaintext highlighter-rouge">#!/bin/sh</code> + <code class="language-plaintext highlighter-rouge">chmod +x</code> to make shell executable.</p>
+
+<h2 id="working-with-the-shell">Working with the shell</h2>
+
+<p>Run a command a bunch of times:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>i <span class="k">in</span> <span class="si">$(</span><span class="nb">seq </span>1 5<span class="si">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo </span>hello<span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div>
+
+<p>There’s a lot to unpack:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">for x in list; do BODY; done</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">;</code> terminates a command – equivalent to newline</li>
+      <li>split <code class="language-plaintext highlighter-rouge">list</code>, assign each to <code class="language-plaintext highlighter-rouge">x</code>, and run body</li>
+      <li>splitting is “whitespace splitting”, which we’ll get back to</li>
+      <li>no curly braces in shell, so <code class="language-plaintext highlighter-rouge">do</code> + <code class="language-plaintext highlighter-rouge">done</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">$(seq 1 5)</code>
+    <ul>
+      <li>run the program <code class="language-plaintext highlighter-rouge">seq</code> with arguments <code class="language-plaintext highlighter-rouge">1</code> and <code class="language-plaintext highlighter-rouge">5</code></li>
+      <li>substitute entire <code class="language-plaintext highlighter-rouge">$()</code> with the output of that program</li>
+      <li>equivalent to
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>i <span class="k">in </span>1 2 3 4 5
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">echo hello</code>
+    <ul>
+      <li>everything in a shell script is a command</li>
+      <li>in this case, run the <code class="language-plaintext highlighter-rouge">echo</code> command, which prints its arguments
+with the argument <code class="language-plaintext highlighter-rouge">hello</code>.</li>
+      <li>all commands are searched for in <code class="language-plaintext highlighter-rouge">$PATH</code> (colon-separated)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>We have variables:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>f <span class="k">in</span> <span class="si">$(</span><span class="nb">ls</span><span class="si">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="nv">$f</span><span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div>
+
+<p>Will print each file name in the current directory.
+Can also set variables using <code class="language-plaintext highlighter-rouge">=</code> (no space!):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">foo</span><span class="o">=</span>bar
+<span class="nb">echo</span> <span class="nv">$foo</span>
+</code></pre></div></div>
+
+<p>There are a bunch of “special” variables too:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$1</code> to <code class="language-plaintext highlighter-rouge">$9</code>: arguments to the script</li>
+  <li><code class="language-plaintext highlighter-rouge">$0</code> name of the script itself</li>
+  <li><code class="language-plaintext highlighter-rouge">$#</code> number of arguments</li>
+  <li><code class="language-plaintext highlighter-rouge">$$</code> process ID of current shell</li>
+</ul>
+
+<p>To only print directories</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>f <span class="k">in</span> <span class="si">$(</span><span class="nb">ls</span><span class="si">)</span><span class="p">;</span> <span class="k">do if </span><span class="nb">test</span> <span class="nt">-d</span> <span class="nv">$f</span><span class="p">;</span> <span class="k">then </span><span class="nb">echo dir</span> <span class="nv">$f</span><span class="p">;</span> <span class="k">fi</span><span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div>
+
+<p>More to unpack here:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">if CONDITION; then BODY; fi</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">CONDITION</code> is a command; if it returns with exit status 0
+(success), then <code class="language-plaintext highlighter-rouge">BODY</code> is run.</li>
+      <li>can also hook in an <code class="language-plaintext highlighter-rouge">else</code> or <code class="language-plaintext highlighter-rouge">elif</code></li>
+      <li>again, no curly braces, so <code class="language-plaintext highlighter-rouge">then</code> + <code class="language-plaintext highlighter-rouge">fi</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">test</code> is another program that provides various checks and
+comparisons, and exits with 0 if they’re true (<code class="language-plaintext highlighter-rouge">$?</code>)
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">man COMMAND</code> is your friend: <code class="language-plaintext highlighter-rouge">man test</code></li>
+      <li>can also be invoked with <code class="language-plaintext highlighter-rouge">[</code> + <code class="language-plaintext highlighter-rouge">]</code>: <code class="language-plaintext highlighter-rouge">[ -d $f ]</code>
+        <ul>
+          <li>take a look at <code class="language-plaintext highlighter-rouge">man test</code> and <code class="language-plaintext highlighter-rouge">which "["</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>But wait! This is wrong! What if a file is called “My Documents”?</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">for f in $(ls)</code> expands to <code class="language-plaintext highlighter-rouge">for f in My Documents</code></li>
+  <li>first do the test on <code class="language-plaintext highlighter-rouge">My</code>, then on <code class="language-plaintext highlighter-rouge">Documents</code></li>
+  <li>not what we wanted!</li>
+  <li>biggest source of bugs in shell scripts</li>
+</ul>
+
+<h2 id="argument-splitting">Argument splitting</h2>
+
+<p>Bash splits arguments by whitespace; not always what you want!</p>
+
+<ul>
+  <li>need to use quoting to handle spaces in arguments
+<code class="language-plaintext highlighter-rouge">for f in "My Documents"</code> would work correctly</li>
+  <li>same problem somewhere else – do you see where?
+<code class="language-plaintext highlighter-rouge">test -d $f</code>: if <code class="language-plaintext highlighter-rouge">$f</code> contains whitespace, <code class="language-plaintext highlighter-rouge">test</code> will error!</li>
+  <li><code class="language-plaintext highlighter-rouge">echo</code> happens to be okay, because split + join by space
+but what if a filename contains a newline?! turns into space!</li>
+  <li>quote all use of variables that you don’t want split</li>
+  <li>but how do we fix our script above?
+what does <code class="language-plaintext highlighter-rouge">for f in "$(ls)"</code> do do you think?</li>
+</ul>
+
+<p>Globbing is the answer!</p>
+
+<ul>
+  <li>bash knows how to look for files using patterns:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">*</code> any string of characters</li>
+      <li><code class="language-plaintext highlighter-rouge">?</code> any single character</li>
+      <li><code class="language-plaintext highlighter-rouge">{a,b,c}</code> any of these characters</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">for f in *</code>: all files in this directory</li>
+  <li>when globbing, each matching file becomes its own argument
+    <ul>
+      <li>still need to make sure to quote when <em>using</em>: <code class="language-plaintext highlighter-rouge">test -d "$f"</code></li>
+    </ul>
+  </li>
+  <li>can make advanced patterns:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">for f in a*</code>: all files starting with <code class="language-plaintext highlighter-rouge">a</code> in the current directory</li>
+      <li><code class="language-plaintext highlighter-rouge">for f in foo/*.txt</code>: all <code class="language-plaintext highlighter-rouge">.txt</code> files in <code class="language-plaintext highlighter-rouge">foo</code></li>
+      <li><code class="language-plaintext highlighter-rouge">for f in foo/*/p??.txt</code>
+all three-letter text files starting with p in subdirs of <code class="language-plaintext highlighter-rouge">foo</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Whitespace issues don’t stop there:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">if [ $foo = "bar" ]; then</code> – see the issue?</li>
+  <li>what if <code class="language-plaintext highlighter-rouge">$foo</code> is empty? arguments to <code class="language-plaintext highlighter-rouge">[</code> are <code class="language-plaintext highlighter-rouge">=</code> and <code class="language-plaintext highlighter-rouge">bar</code>…</li>
+  <li><em>can</em> work around this with <code class="language-plaintext highlighter-rouge">[ x$foo = "xbar" ]</code>, but bleh</li>
+  <li>instead, use <code class="language-plaintext highlighter-rouge">[[</code>: bash built-in comparator that has special parsing
+    <ul>
+      <li>also allows <code class="language-plaintext highlighter-rouge">&amp;&amp;</code> instead of <code class="language-plaintext highlighter-rouge">-a</code>, <code class="language-plaintext highlighter-rouge">||</code> over <code class="language-plaintext highlighter-rouge">-o</code>, etc.</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- TODO: arrays? $@. ${array[@]} vs "${array[@]}". -->
+
+<h2 id="composability">Composability</h2>
+
+<p>Shell is powerful in part because of composability. Can chain multiple
+programs together rather than have one program that does everything.</p>
+
+<p>The key character is <code class="language-plaintext highlighter-rouge">|</code> (pipe).</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">a | b</code> means run both <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code>
+send all output of <code class="language-plaintext highlighter-rouge">a</code> as input to <code class="language-plaintext highlighter-rouge">b</code>
+print the output of <code class="language-plaintext highlighter-rouge">b</code></li>
+</ul>
+
+<p>All programs you launch (“processes”) have three “streams”:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">STDIN</code>: when the program reads input, it comes from here</li>
+  <li><code class="language-plaintext highlighter-rouge">STDOUT</code>: when the program prints something, it goes here</li>
+  <li><code class="language-plaintext highlighter-rouge">STDERR</code>: a 2nd output the program can choose to use</li>
+  <li>by default, <code class="language-plaintext highlighter-rouge">STDIN</code> is your keyboard, <code class="language-plaintext highlighter-rouge">STDOUT</code> and <code class="language-plaintext highlighter-rouge">STDERR</code> are both
+your terminal. but you can change that!
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">a | b</code> makes <code class="language-plaintext highlighter-rouge">STDOUT</code> of <code class="language-plaintext highlighter-rouge">a</code> <code class="language-plaintext highlighter-rouge">STDIN</code> of <code class="language-plaintext highlighter-rouge">b</code>.</li>
+      <li>also have:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">a &gt; foo</code> (<code class="language-plaintext highlighter-rouge">STDOUT</code> of <code class="language-plaintext highlighter-rouge">a</code> goes to the file <code class="language-plaintext highlighter-rouge">foo</code>)</li>
+          <li><code class="language-plaintext highlighter-rouge">a 2&gt; foo</code> (<code class="language-plaintext highlighter-rouge">STDERR</code> of <code class="language-plaintext highlighter-rouge">a</code> goes to the file <code class="language-plaintext highlighter-rouge">foo</code>)</li>
+          <li><code class="language-plaintext highlighter-rouge">a &lt; foo</code> (<code class="language-plaintext highlighter-rouge">STDIN</code> of <code class="language-plaintext highlighter-rouge">a</code> is read from the file <code class="language-plaintext highlighter-rouge">foo</code>)</li>
+          <li>hint: <code class="language-plaintext highlighter-rouge">tail -f</code> will print a file as it’s being written</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>why is this useful? lets you manipulate output of a program!
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ls | grep foo</code>: all files that contain the word <code class="language-plaintext highlighter-rouge">foo</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ps | grep foo</code>: all processes that contain the word <code class="language-plaintext highlighter-rouge">foo</code></li>
+      <li><code class="language-plaintext highlighter-rouge">journalctl | grep -i intel | tail -n5</code>:
+last 5 system log messages with the word intel (case insensitive)</li>
+      <li><code class="language-plaintext highlighter-rouge">who | sendmail -t me@example.com</code>
+send the list of logged-in users to <code class="language-plaintext highlighter-rouge">me@example.com</code></li>
+      <li>forms the basis for much data-wrangling, as we’ll cover later</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Bash also provides a number of other ways to compose programs.</p>
+
+<p>You can group commands with <code class="language-plaintext highlighter-rouge">(a; b) | tac</code>: run <code class="language-plaintext highlighter-rouge">a</code>, then <code class="language-plaintext highlighter-rouge">b</code>, and send
+all their output to <code class="language-plaintext highlighter-rouge">tac</code>, which prints its input in reverse order.</p>
+
+<p>A lesser-known, but super useful one is <em>process substitution</em>.
+<code class="language-plaintext highlighter-rouge">b &lt;(a)</code> will run <code class="language-plaintext highlighter-rouge">a</code>, generate a temporary file-name for its output
+stream, and pass that file-name to <code class="language-plaintext highlighter-rouge">b</code>. For example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff &lt;<span class="o">(</span>journalctl <span class="nt">-b</span> <span class="nt">-1</span> | <span class="nb">head</span> <span class="nt">-n20</span><span class="o">)</span> &lt;<span class="o">(</span>journalctl <span class="nt">-b</span> <span class="nt">-2</span> | <span class="nb">head</span> <span class="nt">-n20</span><span class="o">)</span>
+</code></pre></div></div>
+<p>will show you the difference between the first 20 lines of the last boot
+log and the one before that.</p>
+
+<!-- TODO: exit codes? -->
+
+<h2 id="job-and-process-control">Job and process control</h2>
+
+<p>What if you want to run longer-term things in the background?</p>
+
+<ul>
+  <li>the <code class="language-plaintext highlighter-rouge">&amp;</code> suffix runs a program “in the background”
+    <ul>
+      <li>it will give you back your prompt immediately</li>
+      <li>handy if you want to run two programs at the same time
+like a server and client: <code class="language-plaintext highlighter-rouge">server &amp; client</code></li>
+      <li>note that the running program still has your terminal as <code class="language-plaintext highlighter-rouge">STDOUT</code>!
+try: <code class="language-plaintext highlighter-rouge">server &gt; server.log &amp; client</code></li>
+    </ul>
+  </li>
+  <li>see all such processes with <code class="language-plaintext highlighter-rouge">jobs</code>
+    <ul>
+      <li>notice that it shows “Running”</li>
+    </ul>
+  </li>
+  <li>bring it to the foreground with <code class="language-plaintext highlighter-rouge">fg %JOB</code> (no argument is latest)</li>
+  <li>if you want to background the current program: <code class="language-plaintext highlighter-rouge">^Z</code> + <code class="language-plaintext highlighter-rouge">bg</code> (Here <code class="language-plaintext highlighter-rouge">^Z</code> means pressing <code class="language-plaintext highlighter-rouge">Ctrl+Z</code>)
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">^Z</code> stops the current process and makes it a “job”</li>
+      <li><code class="language-plaintext highlighter-rouge">bg</code> runs the last job in the background (as if you did <code class="language-plaintext highlighter-rouge">&amp;</code>)</li>
+    </ul>
+  </li>
+  <li>background jobs are still tied to your current session, and exit if
+you log out. <code class="language-plaintext highlighter-rouge">disown</code> lets you sever that connection. or use <code class="language-plaintext highlighter-rouge">nohup</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">$!</code> is pid of last background process</li>
+</ul>
+
+<!-- TODO: process output control (^S and ^Q)? -->
+
+<p>What about other stuff running on your computer?</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ps</code> is your friend: lists running processes
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ps -A</code>: print processes from all users (also <code class="language-plaintext highlighter-rouge">ps ax</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">ps</code> has <em>many</em> arguments: see <code class="language-plaintext highlighter-rouge">man ps</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">pgrep</code>: find processes by searching (like <code class="language-plaintext highlighter-rouge">ps -A | grep</code>)
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">pgrep -af</code>: search and display with arguments</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">kill</code>: send a <em>signal</em> to a process by ID (<code class="language-plaintext highlighter-rouge">pkill</code> by search + <code class="language-plaintext highlighter-rouge">-f</code>)
+    <ul>
+      <li>signals tell a process to “do something”</li>
+      <li>most common: <code class="language-plaintext highlighter-rouge">SIGKILL</code> (<code class="language-plaintext highlighter-rouge">-9</code> or <code class="language-plaintext highlighter-rouge">-KILL</code>): tell it to exit <em>now</em>
+equivalent to <code class="language-plaintext highlighter-rouge">^\</code></li>
+      <li>also <code class="language-plaintext highlighter-rouge">SIGTERM</code> (<code class="language-plaintext highlighter-rouge">-15</code> or <code class="language-plaintext highlighter-rouge">-TERM</code>): tell it to exit gracefully
+equivalent to <code class="language-plaintext highlighter-rouge">^C</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="flags">Flags</h2>
+
+<p>Most command line utilities take parameters using <strong>flags</strong>. Flags usually come in short form (<code class="language-plaintext highlighter-rouge">-h</code>) and long form (<code class="language-plaintext highlighter-rouge">--help</code>). Usually running <code class="language-plaintext highlighter-rouge">CMD -h</code> or <code class="language-plaintext highlighter-rouge">man CMD</code> will give you a list of the flags the program takes.
+Short flags can usually be combined, running <code class="language-plaintext highlighter-rouge">rm -r -f</code> is equivalent to running <code class="language-plaintext highlighter-rouge">rm -rf</code> or <code class="language-plaintext highlighter-rouge">rm -fr</code>.
+Some common flags are a de facto standard and you will seem them in many applications:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-a</code> commonly refers to all files (i.e. also including those that start with a period)</li>
+  <li><code class="language-plaintext highlighter-rouge">-f</code> usually refers to forcing something, like <code class="language-plaintext highlighter-rouge">rm -f</code></li>
+  <li><code class="language-plaintext highlighter-rouge">-h</code> displays the help for most commands</li>
+  <li><code class="language-plaintext highlighter-rouge">-v</code> usually enables a verbose output</li>
+  <li><code class="language-plaintext highlighter-rouge">-V</code> usually prints the version of the command</li>
+</ul>
+
+<p>Also, a double dash <code class="language-plaintext highlighter-rouge">--</code> is used in built-in commands and many other commands to signify the end of command options, after which only positional parameters are accepted. So if you have a file called <code class="language-plaintext highlighter-rouge">-v</code> (which you can) and want to grep it <code class="language-plaintext highlighter-rouge">grep pattern -- -v</code> will work whereas <code class="language-plaintext highlighter-rouge">grep pattern -v</code> won’t. In fact, one way to create such file is to do <code class="language-plaintext highlighter-rouge">touch -- -v</code>.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<ol>
+  <li>
+    <p>If you are completely new to the shell you may want to read a more comprehensive guide about it such as <a href="http://mywiki.wooledge.org/BashGuide">BashGuide</a>. If you want a more in-depth introduction <a href="http://linuxcommand.org/tlcl.php">The Linux Command Line</a> is a good resource.</p>
+  </li>
+  <li>
+    <p><strong>PATH, which, type</strong></p>
+
+    <p>We briefly discussed that the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable is used to locate the programs that you run through the command line. Let’s explore that a little further</p>
+    <ul>
+      <li>Run <code class="language-plaintext highlighter-rouge">echo $PATH</code> (or <code class="language-plaintext highlighter-rouge">echo $PATH | tr -s ':' '\n'</code> for pretty printing) and examine its contents, what locations are listed?</li>
+      <li>The command <code class="language-plaintext highlighter-rouge">which</code> locates a program in the user PATH. Try running <code class="language-plaintext highlighter-rouge">which</code> for common commands like <code class="language-plaintext highlighter-rouge">echo</code>, <code class="language-plaintext highlighter-rouge">ls</code> or <code class="language-plaintext highlighter-rouge">mv</code>. Note that <code class="language-plaintext highlighter-rouge">which</code> is a bit limited since it does not understand shell aliases. Try running <code class="language-plaintext highlighter-rouge">type</code> and <code class="language-plaintext highlighter-rouge">command -v</code> for those same commands. How is the output different?</li>
+      <li>Run <code class="language-plaintext highlighter-rouge">PATH=</code> and try running the previous commands again, some work and some don’t, can you figure out why?</li>
+    </ul>
+  </li>
+  <li><strong>Special Variables</strong>
+    <ul>
+      <li>What does the variable <code class="language-plaintext highlighter-rouge">~</code> expands as? What about <code class="language-plaintext highlighter-rouge">.</code>? And <code class="language-plaintext highlighter-rouge">..</code>?</li>
+      <li>What does the variable <code class="language-plaintext highlighter-rouge">$?</code> do?</li>
+      <li>What does the variable <code class="language-plaintext highlighter-rouge">$_</code> do?</li>
+      <li>What does the variable <code class="language-plaintext highlighter-rouge">!!</code> expand to? What about <code class="language-plaintext highlighter-rouge">!!*</code>? And <code class="language-plaintext highlighter-rouge">!l</code>?</li>
+      <li>Look for documentation for these options and familiarize yourself with them</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>xargs</strong></p>
+
+    <p>Sometimes piping doesn’t quite work because the command being piped into does not expect the newline separated format. For example <code class="language-plaintext highlighter-rouge">file</code> command tells you properties of the file.</p>
+
+    <p>Try running <code class="language-plaintext highlighter-rouge">ls | file</code> and <code class="language-plaintext highlighter-rouge">ls | xargs file</code>. What is <code class="language-plaintext highlighter-rouge">xargs</code> doing?</p>
+  </li>
+  <li>
+    <p><strong>Shebang</strong></p>
+
+    <p>When you write a script you can specify to your shell what interpreter should be used to interpret the script by using a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a> line. Write a script called <code class="language-plaintext highlighter-rouge">hello</code> with the following contentsmake  it executable with <code class="language-plaintext highlighter-rouge">chmod +x hello</code>. Then execute it with <code class="language-plaintext highlighter-rouge">./hello</code>. Then remove the first line and execute it again? How is the shell using that first line?</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c">#! /usr/bin/python</span>
+
+   print<span class="o">(</span><span class="s2">"Hello World!"</span><span class="o">)</span>
+</code></pre></div>    </div>
+
+    <p>You will often see programs that have a shebang that looks like <code class="language-plaintext highlighter-rouge">#! usr/bin/env bash</code>. This is a more portable solution with it own set of <a href="https://unix.stackexchange.com/questions/29608/why-is-it-better-to-use-usr-bin-env-name-instead-of-path-to-name-as-my">advantages and disadvantages</a>. How is <code class="language-plaintext highlighter-rouge">env</code> different from <code class="language-plaintext highlighter-rouge">which</code>? What environment variable does <code class="language-plaintext highlighter-rouge">env</code> use to decide what program to run?</p>
+  </li>
+  <li>
+    <p><strong>Pipes, process substitution, subshell</strong></p>
+
+    <p>Create a script called <code class="language-plaintext highlighter-rouge">slow_seq.sh</code> with the following contents and do <code class="language-plaintext highlighter-rouge">chmod +x slow_seq.sh</code> to make it executable.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c">#! /usr/bin/env bash</span>
+
+   <span class="k">for </span>i <span class="k">in</span> <span class="si">$(</span><span class="nb">seq </span>1 10<span class="si">)</span><span class="p">;</span> <span class="k">do
+           </span><span class="nb">echo</span> <span class="nv">$i</span><span class="p">;</span>
+           <span class="nb">sleep </span>1<span class="p">;</span>
+   <span class="k">done</span>
+</code></pre></div>    </div>
+
+    <p>There is a way in which pipes (and process substitution) differ from using subshell execution, i.e. <code class="language-plaintext highlighter-rouge">$()</code>. Run the following commands and observe the differences:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">./slow_seq.sh | grep -P "[3-6]"</code></li>
+      <li><code class="language-plaintext highlighter-rouge">grep -P "[3-6]" &lt;(./slow_seq.sh)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">echo $(./slow_seq.sh) | grep -P "[3-6]"</code></li>
+    </ul>
+  </li>
+  <li><strong>Misc</strong>
+    <ul>
+      <li>Try running <code class="language-plaintext highlighter-rouge">touch {a,b}{a,b}</code> then <code class="language-plaintext highlighter-rouge">ls</code> what did appear?</li>
+      <li>Sometimes you want to keep STDIN and still pipe it to a file. Try running <code class="language-plaintext highlighter-rouge">echo HELLO | tee hello.txt</code></li>
+      <li>Try running <code class="language-plaintext highlighter-rouge">cat hello.txt &gt; hello.txt </code> what do you expect to happen? What does happen?</li>
+      <li>Run <code class="language-plaintext highlighter-rouge">echo HELLO &gt; hello.txt</code> and then run <code class="language-plaintext highlighter-rouge">echo WORLD &gt;&gt; hello.txt</code>. What are the contents of <code class="language-plaintext highlighter-rouge">hello.txt</code>? How is <code class="language-plaintext highlighter-rouge">&gt;</code> different from <code class="language-plaintext highlighter-rouge">&gt;&gt;</code>?</li>
+      <li>Run <code class="language-plaintext highlighter-rouge">printf "\e[38;5;81mfoo\e[0m\n"</code>. How was the output different? If you want to know more, search for ANSI color escape sequences.</li>
+      <li>Run <code class="language-plaintext highlighter-rouge">touch a.txt</code> then run <code class="language-plaintext highlighter-rouge">^txt^log</code> what did bash do for you? In the same vein, run <code class="language-plaintext highlighter-rouge">fc</code>. What does it do?</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Keyboard shortcuts</strong></p>
+
+    <p>As with any application you use frequently is worth familiarising yourself with its keyboard shortcuts. Type the following ones and try figuring out what they do and in what scenarios it might be convenient knowing about them. For some of them it might be easier searching online about what they do. (remember that <code class="language-plaintext highlighter-rouge">^X</code> means pressing <code class="language-plaintext highlighter-rouge">Ctrl+X</code>)</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">^A</code>, <code class="language-plaintext highlighter-rouge">^E</code></li>
+      <li><code class="language-plaintext highlighter-rouge">^R</code></li>
+      <li><code class="language-plaintext highlighter-rouge">^L</code></li>
+      <li><code class="language-plaintext highlighter-rouge">^C</code>, <code class="language-plaintext highlighter-rouge">^\</code> and  <code class="language-plaintext highlighter-rouge">^D</code></li>
+      <li><code class="language-plaintext highlighter-rouge">^U</code> and <code class="language-plaintext highlighter-rouge">^Y</code></li>
+    </ul>
+  </li>
+</ol>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/shell.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

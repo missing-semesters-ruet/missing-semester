@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/program-introspection/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Program Introspection" />
+  <meta property="og:title" content="Program Introspection" />
+
+  
+
+  <title>
+      Program Introspection &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Program Introspection</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 62.5%;">
+    <iframe src="https://www.youtube.com/embed/74MhV-7hYzg" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<h1 id="debugging">Debugging</h1>
+
+<p>When printf-debugging isn’t good enough: use a debugger.</p>
+
+<p>Debuggers let you interact with the execution of a program, letting you do
+things like:</p>
+
+<ul>
+  <li>halt execution of the program when it reaches a certain line</li>
+  <li>single-step through the program</li>
+  <li>inspect values of variables</li>
+  <li>many more advanced features</li>
+</ul>
+
+<h2 id="gdblldb">GDB/LLDB</h2>
+
+<p><a href="https://www.gnu.org/software/gdb/">GDB</a> and <a href="https://lldb.llvm.org/">LLDB</a>.
+Supports many C-like languages.</p>
+
+<p>Let’s look at <a href="/2019/files/example.c">example.c</a>. Compile with debug flags:
+<code class="language-plaintext highlighter-rouge">gcc -g -o example example.c</code>.</p>
+
+<p>Open GDB:</p>
+
+<p><code class="language-plaintext highlighter-rouge">gdb example</code></p>
+
+<p>Some commands:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">run</code></li>
+  <li><code class="language-plaintext highlighter-rouge">b {name of function}</code> - set a breakpoint</li>
+  <li><code class="language-plaintext highlighter-rouge">b {file}:{line}</code> - set a breakpoint</li>
+  <li><code class="language-plaintext highlighter-rouge">c</code> - continue</li>
+  <li><code class="language-plaintext highlighter-rouge">step</code> / <code class="language-plaintext highlighter-rouge">next</code> / <code class="language-plaintext highlighter-rouge">finish</code> - step in / step over / step out</li>
+  <li><code class="language-plaintext highlighter-rouge">p {variable}</code> - print value of variable</li>
+  <li><code class="language-plaintext highlighter-rouge">watch {expression}</code> - set a watchpoint that triggers when the value of the expression changes</li>
+  <li><code class="language-plaintext highlighter-rouge">rwatch {expression}</code> - set a watchpoint that triggers when the value is read</li>
+  <li><code class="language-plaintext highlighter-rouge">layout</code></li>
+</ul>
+
+<h2 id="pdb">PDB</h2>
+
+<p><a href="https://docs.python.org/3/library/pdb.html">PDB</a> is the Python debugger.</p>
+
+<p>Insert <code class="language-plaintext highlighter-rouge">import pdb; pdb.set_trace()</code> where you want to drop into PDB, basically
+a hybrid of a debugger (like GDB) and a Python shell.</p>
+
+<h2 id="web-browser-developer-tools">Web browser Developer Tools</h2>
+
+<p>Another example of a debugger, this time with a graphical interface.</p>
+
+<h1 id="strace">strace</h1>
+
+<p>Observe system calls a program makes: <code class="language-plaintext highlighter-rouge">strace {program}</code>.</p>
+
+<h1 id="profiling">Profiling</h1>
+
+<p>Types of profiling: CPU, memory, etc.</p>
+
+<p>Simplest profiler: <code class="language-plaintext highlighter-rouge">time</code>.</p>
+
+<h2 id="go">Go</h2>
+
+<p>Run test code with CPU profiler: <code class="language-plaintext highlighter-rouge">go test -cpuprofile=cpu.out</code></p>
+
+<p>Analyze profile: <code class="language-plaintext highlighter-rouge">go tool pprof -web cpu.out</code></p>
+
+<p>Run test code with Memory profiler: <code class="language-plaintext highlighter-rouge">go test -memprofile=mem.out</code></p>
+
+<p>Analyze profile: <code class="language-plaintext highlighter-rouge">go tool pprof -web mem.out</code></p>
+
+<h2 id="perf">Perf</h2>
+
+<p>Basic performance stats: <code class="language-plaintext highlighter-rouge">perf stat {command}</code></p>
+
+<p>Run a program with the profiler: <code class="language-plaintext highlighter-rouge">perf record {command}</code></p>
+
+<p>Analyze profile: <code class="language-plaintext highlighter-rouge">perf report</code></p>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/program-introspection.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/editors/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Editors" />
+  <meta property="og:title" content="Editors" />
+
+  
+
+  <title>
+      Editors &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Editors</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 62.5%;">
+    <iframe src="https://www.youtube.com/embed/1vLcusYSrI4" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<h1 id="importance-of-editors">Importance of Editors</h1>
+
+<p>As programmers, we spend most of our time editing plain-text files. It’s worth
+investing time learning an editor that fits your needs.</p>
+
+<p>How do you learn a new editor? You force yourself to use that editor for a
+while, even if it temporarily hampers your productivity. It’ll pay off soon
+enough (two weeks is enough to learn the basics).</p>
+
+<p>We are going to teach you Vim, but we encourage you to experiment with other
+editors. It’s a very personal choice, and people have <a href="https://en.wikipedia.org/wiki/Editor_war">strong
+opinions</a>.</p>
+
+<p>We can’t teach you how to use a powerful editor in 50 minutes, so we’re going
+to focus on teaching you the basics, showing you some of the more advanced
+functionality, and giving you the resources to master the tool. We’ll teach you
+lessons in the context of Vim, but most ideas will translate to any other
+powerful editor you use (and if they don’t, then you probably shouldn’t use
+that editor!).</p>
+
+<p><img src="/2019/files/editor-learning-curves.jpg" alt="Editor Learning Curves" /></p>
+
+<!-- source: https://blogs.msdn.microsoft.com/steverowe/2004/11/17/code-editor-learning-curves/ -->
+
+<p>The editor learning curves graph is a myth. Learning the basics of a powerful
+editor is quite easy (even though it might take years to master).</p>
+
+<p>Which editors are popular today? See this <a href="https://insights.stackoverflow.com/survey/2018/#development-environments-and-tools">Stack Overflow
+survey</a>
+(there may be some bias because Stack Overflow users may not be representative
+of programmers as a whole).</p>
+
+<h2 id="command-line-editors">Command-line Editors</h2>
+
+<p>Even if you eventually settle on using a GUI editor, it’s worth learning a
+command-line editor for easily editing files on remote machines.</p>
+
+<h1 id="nano">Nano</h1>
+
+<p>Nano is a simple command-line editor.</p>
+
+<ul>
+  <li>Move with arrow keys</li>
+  <li>All other shortcuts (save, exit) shown at the bottom</li>
+</ul>
+
+<h1 id="vim">Vim</h1>
+
+<p>Vi/Vim is a powerful text editor. It’s a command-line program that’s usually
+installed everywhere, which makes it convenient for editing files on a remote
+machine.</p>
+
+<p>Vim also has graphical versions, such as GVim and
+<a href="https://macvim-dev.github.io/macvim/">MacVim</a>. These provide additional
+features such as 24-bit color, menus, and popups.</p>
+
+<h2 id="philosophy-of-vim">Philosophy of Vim</h2>
+
+<ul>
+  <li>When programming, you spend most of your time reading/editing, not writing
+    <ul>
+      <li>Vim is a <strong>modal</strong> editor: different modes for inserting text vs manipulating text</li>
+    </ul>
+  </li>
+  <li>Vim is programmable (with Vimscript and also other languages like Python)</li>
+  <li>Vim’s interface itself is like a programming language
+    <ul>
+      <li>Keystrokes (with mnemonic names) are commands</li>
+      <li>Commands are composable</li>
+    </ul>
+  </li>
+  <li>Don’t use the mouse: too slow</li>
+  <li>Editor should work at the speed you think</li>
+</ul>
+
+<h2 id="introductory-vim">Introductory Vim</h2>
+
+<h3 id="modes">Modes</h3>
+
+<p>Vim shows the current mode in the bottom left.</p>
+
+<ul>
+  <li>Normal mode: for moving around a file and making edits
+    <ul>
+      <li>Spend most of your time here</li>
+    </ul>
+  </li>
+  <li>Insert mode: for inserting text</li>
+  <li>Visual (visual, line, or block) mode: for selecting blocks of text</li>
+</ul>
+
+<p>You change modes by pressing <code class="language-plaintext highlighter-rouge">&lt;ESC&gt;</code> to switch from any mode back to normal
+mode. From normal mode, enter insert mode with <code class="language-plaintext highlighter-rouge">i</code>, visual mode with <code class="language-plaintext highlighter-rouge">v</code>,
+visual line mode with <code class="language-plaintext highlighter-rouge">V</code>, and visual block mode with <code class="language-plaintext highlighter-rouge">&lt;C-v&gt;</code>.</p>
+
+<p>You use the <code class="language-plaintext highlighter-rouge">&lt;ESC&gt;</code> key a lot when using Vim: consider remapping Caps Lock to
+Escape.</p>
+
+<h3 id="basics">Basics</h3>
+
+<p>Vim ex commands are issued through <code class="language-plaintext highlighter-rouge">:{command}</code> in normal mode.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">:q</code> quit (close window)</li>
+  <li><code class="language-plaintext highlighter-rouge">:w</code> save</li>
+  <li><code class="language-plaintext highlighter-rouge">:wq</code> save and quit</li>
+  <li><code class="language-plaintext highlighter-rouge">:e {name of file}</code> open file for editing</li>
+  <li><code class="language-plaintext highlighter-rouge">:ls</code> show open buffers</li>
+  <li><code class="language-plaintext highlighter-rouge">:help {topic}</code> open help
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">:help :w</code> opens help for the <code class="language-plaintext highlighter-rouge">:w</code> ex command</li>
+      <li><code class="language-plaintext highlighter-rouge">:help w</code> opens help for the <code class="language-plaintext highlighter-rouge">w</code> movement</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="movement">Movement</h3>
+
+<p>Vim is all about efficient movement. Navigate the file in Normal mode.</p>
+
+<ul>
+  <li>Disable arrow keys to avoid bad habits
+    <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nnoremap <span class="p">&lt;</span>Left<span class="p">&gt;</span> <span class="p">:</span><span class="k">echoe</span> <span class="s2">"Use h"</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+nnoremap <span class="p">&lt;</span>Right<span class="p">&gt;</span> <span class="p">:</span><span class="k">echoe</span> <span class="s2">"Use l"</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+nnoremap <span class="p">&lt;</span>Up<span class="p">&gt;</span> <span class="p">:</span><span class="k">echoe</span> <span class="s2">"Use k"</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+nnoremap <span class="p">&lt;</span>Down<span class="p">&gt;</span> <span class="p">:</span><span class="k">echoe</span> <span class="s2">"Use j"</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Basic movement: <code class="language-plaintext highlighter-rouge">hjkl</code> (left, down, up, right)</li>
+  <li>Words: <code class="language-plaintext highlighter-rouge">w</code> (next word), <code class="language-plaintext highlighter-rouge">b</code> (beginning of word), <code class="language-plaintext highlighter-rouge">e</code> (end of word)</li>
+  <li>Lines: <code class="language-plaintext highlighter-rouge">0</code> (beginning of line), <code class="language-plaintext highlighter-rouge">^</code> (first non-blank character), <code class="language-plaintext highlighter-rouge">$</code> (end of line)</li>
+  <li>Screen: <code class="language-plaintext highlighter-rouge">H</code> (top of screen), <code class="language-plaintext highlighter-rouge">M</code> (middle of screen), <code class="language-plaintext highlighter-rouge">L</code> (bottom of screen)</li>
+  <li>File: <code class="language-plaintext highlighter-rouge">gg</code> (beginning of file), <code class="language-plaintext highlighter-rouge">G</code> (end of file)</li>
+  <li>Line numbers: <code class="language-plaintext highlighter-rouge">:{number}&lt;CR&gt;</code> or <code class="language-plaintext highlighter-rouge">{number}G</code> (line {number})</li>
+  <li>Misc: <code class="language-plaintext highlighter-rouge">%</code> (corresponding item)</li>
+  <li>Find: <code class="language-plaintext highlighter-rouge">f{character}</code>, <code class="language-plaintext highlighter-rouge">t{character}</code>, <code class="language-plaintext highlighter-rouge">F{character}</code>, <code class="language-plaintext highlighter-rouge">T{character}</code>
+    <ul>
+      <li>find/to forward/backward {character} on the current line</li>
+    </ul>
+  </li>
+  <li>Repeating N times: <code class="language-plaintext highlighter-rouge">{number}{movement}</code>, e.g. <code class="language-plaintext highlighter-rouge">10j</code> moves down 10 lines</li>
+  <li>Search: <code class="language-plaintext highlighter-rouge">/{regex}</code>, <code class="language-plaintext highlighter-rouge">n</code> / <code class="language-plaintext highlighter-rouge">N</code> for navigating matches</li>
+</ul>
+
+<h3 id="selection">Selection</h3>
+
+<p>Visual modes:</p>
+
+<ul>
+  <li>Visual</li>
+  <li>Visual Line</li>
+  <li>Visual Block</li>
+</ul>
+
+<p>Can use movement keys to make selection.</p>
+
+<h3 id="manipulating-text">Manipulating text</h3>
+
+<p>Everything that you used to do with the mouse, you now do with keyboards (and
+powerful, composable commands).</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">i</code> enter insert mode
+    <ul>
+      <li>but for manipulating/deleting text, want to use something more than
+  backspace</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">o</code> / <code class="language-plaintext highlighter-rouge">O</code> insert line below / above</li>
+  <li><code class="language-plaintext highlighter-rouge">d{motion}</code> delete {motion}
+    <ul>
+      <li>e.g. <code class="language-plaintext highlighter-rouge">dw</code> is delete word, <code class="language-plaintext highlighter-rouge">d$</code> is delete to end of line, <code class="language-plaintext highlighter-rouge">d0</code> is delete
+  to beginning of line</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">c{motion}</code> change {motion}
+    <ul>
+      <li>e.g. <code class="language-plaintext highlighter-rouge">cw</code> is change word</li>
+      <li>like <code class="language-plaintext highlighter-rouge">d{motion}</code> followed by <code class="language-plaintext highlighter-rouge">i</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">x</code> delete character (equal do <code class="language-plaintext highlighter-rouge">dl</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">s</code> substitute character (equal to <code class="language-plaintext highlighter-rouge">xi</code>)</li>
+  <li>visual mode + manipulation
+    <ul>
+      <li>select text, <code class="language-plaintext highlighter-rouge">d</code> to delete it or <code class="language-plaintext highlighter-rouge">c</code> to change it</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">u</code> to undo, <code class="language-plaintext highlighter-rouge">&lt;C-r&gt;</code> to redo</li>
+  <li>Lots more to learn: e.g. <code class="language-plaintext highlighter-rouge">~</code> flips the case of a character</li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">vimtutor</code> command-line program to teach you vim</li>
+  <li><a href="https://vim-adventures.com/">Vim Adventures</a> game to learn Vim</li>
+</ul>
+
+<h2 id="customizing-vim">Customizing Vim</h2>
+
+<p>Vim is customized through a plain-text configuration file in <code class="language-plaintext highlighter-rouge">~/.vimrc</code>
+(containing Vimscript commands). There are probably lots of basic settings that
+you want to turn on.</p>
+
+<p>Look at people’s dotfiles on GitHub for inspiration, but try not to
+copy-and-paste people’s full configuration. Read it, understand it, and take
+what you need.</p>
+
+<p>Some customizations to consider:</p>
+
+<ul>
+  <li>Syntax highlighting: <code class="language-plaintext highlighter-rouge">syntax on</code></li>
+  <li>Color schemes</li>
+  <li>Line numbers: <code class="language-plaintext highlighter-rouge">set nu</code> / <code class="language-plaintext highlighter-rouge">set rnu</code></li>
+  <li>Backspacing through everything: <code class="language-plaintext highlighter-rouge">set backspace=indent,eol,start</code></li>
+</ul>
+
+<h2 id="advanced-vim">Advanced Vim</h2>
+
+<p>Here are a few examples to show you the power of the editor. We can’t teach you
+all of these kinds of things, but you’ll learn them as you go. A good
+heuristic: whenever you’re using your editor and you think “there must be a
+better way of doing this”, there probably is: look it up online.</p>
+
+<h3 id="search-and-replace">Search and replace</h3>
+
+<p><code class="language-plaintext highlighter-rouge">:s</code> (substitute) command (<a href="http://vim.wikia.com/wiki/Search_and_replace">documentation</a>).</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">%s/foo/bar/g</code>
+    <ul>
+      <li>replace foo with bar globally in file</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">%s/\[.*\](\(.*\))/\1/g</code>
+    <ul>
+      <li>replace named Markdown links with plain URLs</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="multiple-windows">Multiple windows</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sp</code> / <code class="language-plaintext highlighter-rouge">vsp</code> to split windows</li>
+  <li>Can have multiple views of the same buffer.</li>
+</ul>
+
+<h3 id="mouse-support">Mouse support</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">set mouse+=a</code>
+    <ul>
+      <li>can click, scroll select</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="macros">Macros</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">q{character}</code> to start recording a macro in register <code class="language-plaintext highlighter-rouge">{character}</code></li>
+  <li><code class="language-plaintext highlighter-rouge">q</code> to stop recording</li>
+  <li><code class="language-plaintext highlighter-rouge">@{character}</code> replays the macro</li>
+  <li>Macro execution stops on error</li>
+  <li><code class="language-plaintext highlighter-rouge">{number}@{character}</code> executes a macro {number} times</li>
+  <li>Macros can be recursive
+    <ul>
+      <li>first clear the macro with <code class="language-plaintext highlighter-rouge">q{character}q</code></li>
+      <li>record the macro, with <code class="language-plaintext highlighter-rouge">@{character}</code> to invoke the macro recursively
+  (will be a no-op until recording is complete)</li>
+    </ul>
+  </li>
+  <li>Example: convert xml to json (<a href="/2019/files/example-data.xml">file</a>)
+    <ul>
+      <li>Array of objects with keys “name” / “email”</li>
+      <li>Use a Python program?</li>
+      <li>Use sed / regexes
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">g/people/d</code></li>
+          <li><code class="language-plaintext highlighter-rouge">%s/&lt;person&gt;/{/g</code></li>
+          <li><code class="language-plaintext highlighter-rouge">%s/&lt;name&gt;\(.*\)&lt;\/name&gt;/"name": "\1",/g</code></li>
+          <li>…</li>
+        </ul>
+      </li>
+      <li>Vim commands / macros
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Gdd</code>, <code class="language-plaintext highlighter-rouge">ggdd</code> delete first and last lines</li>
+          <li>Macro to format a single element (register <code class="language-plaintext highlighter-rouge">e</code>)
+            <ul>
+              <li>Go to line with <code class="language-plaintext highlighter-rouge">&lt;name&gt;</code></li>
+              <li><code class="language-plaintext highlighter-rouge">qe^r"f&gt;s": "&lt;ESC&gt;f&lt;C"&lt;ESC&gt;q</code></li>
+            </ul>
+          </li>
+          <li>Macro to format a person
+            <ul>
+              <li>Go to line with <code class="language-plaintext highlighter-rouge">&lt;person&gt;</code></li>
+              <li><code class="language-plaintext highlighter-rouge">qpS{&lt;ESC&gt;j@eA,&lt;ESC&gt;j@ejS},&lt;ESC&gt;q</code></li>
+            </ul>
+          </li>
+          <li>Macro to format a person and go to the next person
+            <ul>
+              <li>Go to line with <code class="language-plaintext highlighter-rouge">&lt;person&gt;</code></li>
+              <li><code class="language-plaintext highlighter-rouge">qq@pjq</code></li>
+            </ul>
+          </li>
+          <li>Execute macro until end of file
+            <ul>
+              <li><code class="language-plaintext highlighter-rouge">999@q</code></li>
+            </ul>
+          </li>
+          <li>Manually remove last <code class="language-plaintext highlighter-rouge">,</code> and add <code class="language-plaintext highlighter-rouge">[</code> and <code class="language-plaintext highlighter-rouge">]</code> delimiters</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="extending-vim">Extending Vim</h2>
+
+<p>There are tons of plugins for extending vim.</p>
+
+<p>First, get set up with a plugin manager like
+<a href="https://github.com/junegunn/vim-plug">vim-plug</a>,
+<a href="https://github.com/VundleVim/Vundle.vim">Vundle</a>, or
+<a href="https://github.com/tpope/vim-pathogen">pathogen.vim</a>.</p>
+
+<p>Some plugins to consider:</p>
+
+<ul>
+  <li><a href="https://github.com/kien/ctrlp.vim">ctrlp.vim</a>: fuzzy file finder</li>
+  <li><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>: git integration</li>
+  <li><a href="https://github.com/tpope/vim-surround">vim-surround</a>: manipulating “surroundings”</li>
+  <li><a href="https://github.com/sjl/gundo.vim">gundo.vim</a>: navigate undo tree</li>
+  <li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a>: file explorer</li>
+  <li><a href="https://github.com/vim-syntastic/syntastic">syntastic</a>: syntax checking</li>
+  <li><a href="https://github.com/easymotion/vim-easymotion">vim-easymotion</a>: magic motions</li>
+  <li><a href="https://github.com/osyo-manga/vim-over">vim-over</a>: substitute preview</li>
+</ul>
+
+<p>Lists of plugins:</p>
+
+<ul>
+  <li><a href="https://vimawesome.com/">Vim Awesome</a></li>
+</ul>
+
+<h2 id="vim-mode-in-other-programs">Vim-mode in Other Programs</h2>
+
+<p>For many popular editors (e.g. vim and emacs), many other tools support editor
+emulation.</p>
+
+<ul>
+  <li>Shell
+    <ul>
+      <li>bash: <code class="language-plaintext highlighter-rouge">set -o vi</code></li>
+      <li>zsh: <code class="language-plaintext highlighter-rouge">bindkey -v</code></li>
+      <li><code class="language-plaintext highlighter-rouge">export EDITOR=vim</code> (environment variable used by programs like <code class="language-plaintext highlighter-rouge">git</code>)</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">~/.inputrc</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">set editing-mode vi</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>There are even vim keybinding extensions for web <a href="http://vim.wikia.com/wiki/Vim_key_bindings_for_web_browsers">browsers</a>, some popular ones are <a href="https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb?hl=en">Vimium</a> for Google Chrome and <a href="https://github.com/tridactyl/tridactyl">Tridactyl</a> for Firefox.</p>
+
+<h2 id="resources-1">Resources</h2>
+
+<ul>
+  <li><a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki">Vim Tips Wiki</a></li>
+  <li><a href="https://vimways.org/2018/">Vim Advent Calendar</a>: various Vim tips</li>
+  <li><a href="https://neovim.io/">Neovim</a> is a modern vim reimplementation with more active development.</li>
+  <li><a href="http://www.vimgolf.com/">Vim Golf</a>: Various Vim challenges</li>
+</ul>
+
+<h1 id="exercises">Exercises</h1>
+
+<ol>
+  <li>
+    <p>Experiment with some editors. Try at least one command-line editor (e.g.
+Vim) and at least one GUI editor (e.g. Atom). Learn through tutorials like
+<code class="language-plaintext highlighter-rouge">vimtutor</code> (or the equivalents for other editors). To get a real feel for a
+new editor, commit to using it exclusively for a couple days while going
+about your work.</p>
+  </li>
+  <li>
+    <p>Customize your editor. Look through tips and tricks online, and look through
+other people’s configurations (often, they are well-documented).</p>
+  </li>
+  <li>
+    <p>Experiment with plugins for your editor.</p>
+  </li>
+  <li>
+    <p>Commit to using a powerful editor for at least a couple weeks: you should
+start seeing the benefits by then. At some point, you should be able to get
+your editor to work as fast as you think.</p>
+  </li>
+  <li>
+    <p>Install a linter (e.g. pyflakes for python) link it to your editor and test it is working.</p>
+  </li>
+</ol>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/editors.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

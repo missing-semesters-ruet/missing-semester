@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/machine-introspection/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Machine Introspection" />
+  <meta property="og:title" content="Machine Introspection" />
+
+  
+
+  <title>
+      Machine Introspection &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Machine Introspection</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/eNYT2Oq3PF8" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>Sometimes, computers misbehave. And very often, you want to know why.
+Let’s look at some tools that help you do that!</p>
+
+<p>But first, let’s make sure you’re able to do introspection. Often,
+system introspection requires that you have certain privileges, like
+being the member of a group (like <code class="language-plaintext highlighter-rouge">power</code> for shutdown). The <code class="language-plaintext highlighter-rouge">root</code> user
+is the ultimate privilege; they can do pretty much anything. You can run
+a command as <code class="language-plaintext highlighter-rouge">root</code> (but be careful!) using <code class="language-plaintext highlighter-rouge">sudo</code>.</p>
+
+<h2 id="what-happened">What happened?</h2>
+
+<p>If something goes wrong, the first place to start is to look at what
+happened around the time when things went wrong. For this, we need to
+look at logs.</p>
+
+<p>Traditionally, logs were all stored in <code class="language-plaintext highlighter-rouge">/var/log</code>, and many still are.
+Usually there’s a file or folder per program. Use <code class="language-plaintext highlighter-rouge">grep</code> or <code class="language-plaintext highlighter-rouge">less</code> to
+find your way through them.</p>
+
+<p>There’s also a kernel log that you can see using the <code class="language-plaintext highlighter-rouge">dmesg</code> command.
+This used to be available as a plain-text file, but nowadays you often
+have to go through <code class="language-plaintext highlighter-rouge">dmesg</code> to get at it.</p>
+
+<p>Finally, there is the “system log”, which is increasingly where all of
+your log messages go. On <em>most</em>, though not all, Linux systems, that log
+is managed by <code class="language-plaintext highlighter-rouge">systemd</code>, the “system daemon”, which controls all the
+services that run in the background (and much much more at this point).
+That log is accessible through the somewhat inconvenient <code class="language-plaintext highlighter-rouge">journalctl</code>
+tool if you are root, or part of the <code class="language-plaintext highlighter-rouge">admin</code> or <code class="language-plaintext highlighter-rouge">wheel</code> groups.</p>
+
+<p>For <code class="language-plaintext highlighter-rouge">journalctl</code>, you should be aware of these flags in particular:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-u UNIT</code>: show only messages related to the given systemd service</li>
+  <li><code class="language-plaintext highlighter-rouge">--full</code>: don’t truncate long lines (the stupidest feature)</li>
+  <li><code class="language-plaintext highlighter-rouge">-b</code>: only show messages from the latest boot (see also <code class="language-plaintext highlighter-rouge">-b -2</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">-n100</code>: only show last 100 entries</li>
+</ul>
+
+<h2 id="what-is-happening">What is happening?</h2>
+
+<p>If something <em>is</em> wrong, or you just want to get a feel for what’s going
+on in your system, you have a number of tools at your disposal for
+inspecting the currently running system:</p>
+
+<p>First, there’s <code class="language-plaintext highlighter-rouge">top</code>, and the improved version <code class="language-plaintext highlighter-rouge">htop</code>, which show you
+various statistics for the currently running processes on the system.
+CPU use, memory use, process trees, etc. There are lots of shortcuts,
+but <code class="language-plaintext highlighter-rouge">t</code> is particularly useful for enabling the tree view. You can also
+see the process tree with <code class="language-plaintext highlighter-rouge">pstree</code> (+ <code class="language-plaintext highlighter-rouge">-p</code> to include PIDs). If you want
+to know what those programs are doing, you’ll often want to tail their
+log files. <code class="language-plaintext highlighter-rouge">journalctl -f</code>, <code class="language-plaintext highlighter-rouge">dmesg -w</code>, and <code class="language-plaintext highlighter-rouge">tail -f</code> are you friends
+here.</p>
+
+<p>Sometimes, you want to know more about the resources being used overall
+on your system. <a href="http://dag.wiee.rs/home-made/dstat/"><code class="language-plaintext highlighter-rouge">dstat</code></a> is
+excellent for that. It gives you real-time resource metrics for lots of
+different subsystems like I/O, networking, CPU utilization, context
+switches, and the like. <code class="language-plaintext highlighter-rouge">man dstat</code> is the place to start.</p>
+
+<p>If you’re running out of disk space, there are two primary utilities
+you’ll want to know about: <code class="language-plaintext highlighter-rouge">df</code> and <code class="language-plaintext highlighter-rouge">du</code>. The former shows you the
+status of all the partitions on your system (try it with <code class="language-plaintext highlighter-rouge">-h</code>), whereas
+the latter measures the size of all the folders you give it, including
+their contents (see also <code class="language-plaintext highlighter-rouge">-h</code> and <code class="language-plaintext highlighter-rouge">-s</code>).</p>
+
+<p>To figure out what network connections you have open, <code class="language-plaintext highlighter-rouge">ss</code> is the way to
+go. <code class="language-plaintext highlighter-rouge">ss -t</code> will show all open TCP connections. <code class="language-plaintext highlighter-rouge">ss -tl</code> will show all
+listening (i.e., server) ports on your system. <code class="language-plaintext highlighter-rouge">-p</code> will also include
+which process is using that connection, and <code class="language-plaintext highlighter-rouge">-n</code> will give you the raw
+port numbers.</p>
+
+<h2 id="system-configuration">System configuration</h2>
+
+<p>There are <em>many</em> ways to configure your system, but we’ll go through
+two very common ones: networking and services. Most applications on your
+system tell you how to configure them in their manpage, and usually it
+will involve editing files in <code class="language-plaintext highlighter-rouge">/etc</code>; the system configuration
+directory.</p>
+
+<p>If you want to configure your network, the <code class="language-plaintext highlighter-rouge">ip</code> command lets you do
+that. Its arguments take on a slightly weird form, but <code class="language-plaintext highlighter-rouge">ip help command</code>
+will get you pretty far. <code class="language-plaintext highlighter-rouge">ip addr</code> shows you information about your
+network interfaces and how they’re configured (IP addresses and such),
+and <code class="language-plaintext highlighter-rouge">ip route</code> shows you how network traffic is routed to different
+network hosts. Network problems can often be resolved purely through the
+<code class="language-plaintext highlighter-rouge">ip</code> tool. There’s also <code class="language-plaintext highlighter-rouge">iw</code> for managing wireless network interfaces.
+<code class="language-plaintext highlighter-rouge">ping</code> is a handy tool for checking how deeply things are broken. Try
+pinging a hostname (google.com), an external IP address (1.1.1.1), and
+an internal IP address (192.168.1.1 or default gw). You may also want to
+fiddle with <code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code> to check your DNS settings (how hostnames
+are resolved to IP addresses).</p>
+
+<p>To configure services, you pretty much have to interact with <code class="language-plaintext highlighter-rouge">systemd</code>
+these days, for better or for worse. Most services on your system will
+have a systemd service file that defines a systemd <em>unit</em>. These files
+define what command to run when that services is started, how to stop
+it, where to log things, etc. They’re usually not too bad to read, and
+you can find most of them in <code class="language-plaintext highlighter-rouge">/usr/lib/systemd/system/</code>. You can also
+define your own in <code class="language-plaintext highlighter-rouge">/etc/systemd/system</code> .</p>
+
+<p>Once you have a systemd service in mind, you use the <code class="language-plaintext highlighter-rouge">systemctl</code> command
+to interact with it. <code class="language-plaintext highlighter-rouge">systemctl enable UNIT</code> will set the service to
+start on boot (<code class="language-plaintext highlighter-rouge">disable</code> removes it again), and <code class="language-plaintext highlighter-rouge">start</code>, <code class="language-plaintext highlighter-rouge">stop</code>, and
+<code class="language-plaintext highlighter-rouge">restart</code> will do what you expect. If something goes wrong, systemd will
+let you know, and you can use <code class="language-plaintext highlighter-rouge">journalctl -u UNIT</code> to see the
+application’s log. You can also use <code class="language-plaintext highlighter-rouge">systemctl status</code> to see how all
+your system services are doing. If your boot feels slow, it’s probably
+due to a couple of slow services, and you can use <code class="language-plaintext highlighter-rouge">systemd-analyze</code> (try
+it with <code class="language-plaintext highlighter-rouge">blame</code>) to figure out which ones.</p>
+
+<h1 id="exercises">Exercises</h1>
+
+<p><code class="language-plaintext highlighter-rouge">locate</code>?
+<code class="language-plaintext highlighter-rouge">dmidecode</code>?
+<code class="language-plaintext highlighter-rouge">tcpdump</code>?
+<code class="language-plaintext highlighter-rouge">/boot</code>?
+<code class="language-plaintext highlighter-rouge">iptables</code>?
+<code class="language-plaintext highlighter-rouge">/proc</code>?</p>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/machine-introspection.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

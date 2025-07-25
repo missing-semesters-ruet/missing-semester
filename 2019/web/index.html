@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/web/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Web and Browsers" />
+  <meta property="og:title" content="Web and Browsers" />
+
+  
+
+  <title>
+      Web and Browsers &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Web and Browsers</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 62.5%;">
+    <iframe src="https://www.youtube.com/embed/XpZO3S8odec" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>Apart from the terminal, the web browser is a tool you will find yourself spending significant amounts of time into. Thus it is worth learning how to use it efficiently and</p>
+
+<h2 id="shortcuts">Shortcuts</h2>
+
+<p>Clicking around in your browser is often not the fastest option, getting familiar with common shortcuts can really pay off in the long run.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Middle Button Click</code> in a link opens it in a new tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+T</code> Opens a new tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+Shift+T</code> Reopens a recently closed tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+L</code> selects the contents of the search bar</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+F</code> to search within a webpage. If you do this often, you may benefit from an extension that supports regular expressions in searches.</li>
+</ul>
+
+<h2 id="search-operators">Search operators</h2>
+
+<p>Web search engines like Google or DuckDuckGo provide search operators to enable more elaborate web searches:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"bar foo"</code> enforces an exact match of bar foo</li>
+  <li><code class="language-plaintext highlighter-rouge">foo site:bar.com</code> searches for foo within bar.com</li>
+  <li><code class="language-plaintext highlighter-rouge">foo -bar </code> excludes the terms containing bar from the search</li>
+  <li><code class="language-plaintext highlighter-rouge">foobar filetype:pdf</code> Searches for files of that extension</li>
+  <li><code class="language-plaintext highlighter-rouge">(foo|bar)</code> searches for matches that have foo OR bar</li>
+</ul>
+
+<p>More through lists are available for popular engines like <a href="https://ahrefs.com/blog/google-advanced-search-operators/">Google</a> and <a href="https://duck.co/help/results/syntax">DuckDuckGo</a></p>
+
+<h2 id="searchbar">Searchbar</h2>
+
+<p>The searchbar is a powerful tool too. Most browsers can infer search engines from websites and will store them. By editing the keyword argument</p>
+
+<ul>
+  <li>In Google Chrome they are in <a href="chrome://settings/searchEngines">chrome://settings/searchEngines</a></li>
+  <li>In Firefox they are in <a href="about:preferences#search">about:preferences#search</a></li>
+</ul>
+
+<p>For example you can make so that <code class="language-plaintext highlighter-rouge">y SOME SEARCH TERMS</code> to directly search in youtube.</p>
+
+<p>Moreover, if you own a domain you can setup subdomain forwards using your registrar. For instance I have mapped <code class="language-plaintext highlighter-rouge">https://ht.josejg.com</code> to this course website. That way I can just type <code class="language-plaintext highlighter-rouge">ht.</code> and the searchbar will autocomplete. Another good feature of this setup is that unlike bookmarks they will work in every browser.</p>
+
+<h2 id="privacy-extensions">Privacy extensions</h2>
+
+<p>Nowadays surfing the web can get quite annoying due to ads and invasive due to trackers. Moreover a good adblocker not only blocks most ad content but it will also block sketchy and malicious websites since they will be included in the common blacklists. They will also reduce page load times sometimes by reducing the amount of requests performed. A couple of recommendations are:</p>
+
+<ul>
+  <li>
+    <p><strong>uBlock origin</strong> (<a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm">Chrome</a>, <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/">Firefox</a>): block ads and trackers based on predefined rules. You should also consider taking a look at the enabled blacklists in settings since you can enable more based on your region or browsing habits. You can even install filters from <a href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web">around the web</a></p>
+  </li>
+  <li>
+    <p><strong><a href="https://privacybadger.org/">Privacy Badger</a></strong>: detects and blocks trackers automatically. For example when you go from website to website ad companies track which sites you visit and build a profile of you</p>
+  </li>
+  <li>
+    <p><strong><a href="https://www.eff.org/https-everywhere">HTTPS everywhere</a></strong> is a wonderful extension that redirects to HTTPS version of a website automatically, if available.</p>
+  </li>
+</ul>
+
+<p>You can find about more addons of this kind <a href="https://www.privacytools.io/privacy-browser-addons/">here</a></p>
+
+<h2 id="style-customization">Style customization</h2>
+
+<p>Web browsers are just another piece of software running in <em>your machine</em> and thus you usually have the last say about what they should display or how they should behave. An example of this are custom styles. Browsers determine how to render the style of a  webpage using Cascading Style Sheets often abbreviated as CSS.</p>
+
+<p>You can access the source code of a website by inspecting it and changing its contents and styles temporarily (this is also a reason why you should never trust webpage screenshots).</p>
+
+<p>If you want to permanently tell your browser to override the style settings for a webpage you will need to use an extension. Our recommendation is <strong><a href="https://github.com/openstyles/stylus">Stylus</a></strong> (<a href="https://addons.mozilla.org/en-US/firefox/addon/styl-us/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne?hl=en">Chrome</a>).</p>
+
+<p>For example, we can write the following style for the class website</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#2d2d2d</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#eee</span><span class="p">;</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="n">Fira</span> <span class="n">Code</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">16pt</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">a</span><span class="nd">:link</span> <span class="p">{</span>
+    <span class="nl">text-decoration</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#0a0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Moreover, Stylus can find styles written by other users and published in <a href="https://userstyles.org/">userstyles.org</a>. Most common websites have one or several dark theme stylesheets for instance. FYI, you should not use Stylish since it was shown to leak user data, more <a href="https://arstechnica.com/information-technology/2018/07/stylish-extension-with-2m-downloads-banished-for-tracking-every-site-visit/">here</a></p>
+
+<h2 id="functionality-customization">Functionality Customization</h2>
+
+<p>In the same way that you can modify the style, you can also modify the behaviour of a website by writing custom javascript and them sourcing it using a web browser extension such as <a href="https://tampermonkey.net/">Tampermonkey</a></p>
+
+<p>For example the following script enables vim-like navigation using the J and K keys.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ==UserScript==</span>
+<span class="c1">// @name         VIM HT</span>
+<span class="c1">// @namespace    http://tampermonkey.net/</span>
+<span class="c1">// @version      0.1</span>
+<span class="c1">// @description  Vim JK for our website</span>
+<span class="c1">// @author       You</span>
+<span class="c1">// @match        https://hacker-tools.github.io/*</span>
+<span class="c1">// @grant        none</span>
+<span class="c1">// ==/UserScript==</span>
+
+
+<span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+
+    <span class="nb">window</span><span class="p">.</span><span class="nx">onkeyup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="p">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">==</span> <span class="mi">74</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// J is key 74</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">scrollBy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">);;</span>
+        <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">==</span> <span class="mi">75</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// K is key 75</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">scrollBy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">500</span><span class="p">);;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})();</span>
+</code></pre></div></div>
+
+<p>There are also script repositories such as <a href="https://openuserjs.org/">OpenUserJS</a> and <a href="https://greasyfork.org/en">Greasy Fork</a>. However, be warned, installing user scripts from others can be very dangerous since they can pretty much do anything such as steal your credit card numbers. Never install a script unless you read the whole thing yourself, understand what it does, and are absolutely sure that you know it isn’t doing anything suspicious. Never install a script that contains minified or obfuscated code that you can’t read!</p>
+
+<h2 id="web-apis">Web APIs</h2>
+
+<p>It has become more and more common for webservices to offer an application interface aka web API so you can interact with the services making web requests.
+A more in depth introduction to the topic can be found <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction">here</a>. There are <a href="https://github.com/toddmotto/public-apis">many public APIs</a>. Web APIs can be useful for very many reasons:</p>
+
+<ul>
+  <li><strong>Retrieval</strong>. Web APIs can quite easily provide you information such as maps, weather or what your public ip address. For instance <code class="language-plaintext highlighter-rouge">curl ipinfo.io</code> will return a JSON object with some details about your public ip, region, location, &amp;c. With proper parsing these tools can be integrated even with command line tools. The following bash functions talks to Googles autocompletion API and returns the first ten matches.</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function </span>c<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">url</span><span class="o">=</span><span class="s1">'https://www.google.com/complete/search?client=hp&amp;hl=en&amp;xhr=t'</span>
+    <span class="c"># NB: user-agent must be specified to get back UTF-8 data!</span>
+    curl <span class="nt">-H</span> <span class="s1">'user-agent: Mozilla/5.0'</span> <span class="nt">-sSG</span> <span class="nt">--data-urlencode</span> <span class="s2">"q=</span><span class="nv">$*</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$url</span><span class="s2">"</span> |
+        jq <span class="nt">-r</span> <span class="s2">".[1][][0]"</span> |
+        <span class="nb">sed</span> <span class="s1">'s,&lt;/\?b&gt;,,g'</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>Interaction</strong>. Web API endpoints can also be used to trigger actions. These usually require some sort of authentication token that you can obtain through the service. For example performing the following
+<code class="language-plaintext highlighter-rouge">curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' "https://hooks.slack.com/services/$SLACK_TOKEN"</code> will send a <code class="language-plaintext highlighter-rouge">Hello, World!</code> message in a channel.</p>
+  </li>
+  <li>
+    <p><strong>Piping</strong>. Since some services with web APIs are rather popular, common web API “gluing” has already been implemented and is provided with server included. This is the case for services like <a href="https://ifttt.com/">If This Then That</a> and <a href="https://zapier.com/">Zapier</a></p>
+  </li>
+</ul>
+
+<h2 id="web-automation">Web Automation</h2>
+
+<p>Sometimes web APIs are not enough. If only reading is needed you can use a html parser like <code class="language-plaintext highlighter-rouge">pup</code> or use a library, for example python has BeautifulSoup. However if interactivity or javascript execution is required those solutions fall short. WebDriver</p>
+
+<p>For example, the following script will save the specified url using the wayback machine simulating the interaction of typing the website.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">selenium.webdriver</span> <span class="kn">import</span> <span class="n">Firefox</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
+
+
+<span class="k">def</span> <span class="nf">snapshot_wayback</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+
+    <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"https://web.archive.org/"</span><span class="p">)</span>
+    <span class="n">elem</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s">'web-save-url-input'</span><span class="p">)</span>
+    <span class="n">elem</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">RETURN</span><span class="p">)</span>
+    <span class="n">driver</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">Firefox</span><span class="p">()</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://hacker-tools.github.io'</span>
+<span class="n">snapshot_wayback</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="exercises">Exercises</h2>
+
+<ol>
+  <li>Edit a keyword search engine that you use often in your web browser</li>
+  <li>Install the mentioned extensions. Look into how uBlock Origin/Privacy Badger can be disabled for a website. What differences do you see? Try doing it in a website with plenty of ads like YouTube.</li>
+  <li>Install Stylus and write a custom style for the class website using the CSS provided. Here are some common programming characters <code class="language-plaintext highlighter-rouge">=   ==   ===   &gt;=   =&gt;   ++   /=   ~=</code>. What happens to them when changing the font to Fira Code? If you want to know more search for programming font ligatures.</li>
+  <li>Find a web api to get the weather in your city/area.</li>
+  <li>Use a WebDriver software like <a href="https://docs.seleniumhq.org/">Selenium</a> to automate some repetitive manual task that you perform often with your browser.</li>
+</ol>
+
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/web.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

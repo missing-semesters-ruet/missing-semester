@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/remote-machines/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Remote Machines" />
+  <meta property="og:title" content="Remote Machines" />
+
+  
+
+  <title>
+      Remote Machines &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Remote Machines</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 62.5%;">
+    <iframe src="https://www.youtube.com/embed/X5c2Y8BCowM" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>It has become more and more common for programmers to use remote servers in their everyday work. If you need to use remote servers in order to deploy backend software or you need a server with higher computational capabilities, you will end up using a Secure Shell (SSH). As with most tools covered, SSH is highly configurable so it is worth learning about it.</p>
+
+<h2 id="executing-commands">Executing commands</h2>
+
+<p>An often overlooked feature of <code class="language-plaintext highlighter-rouge">ssh</code> is the ability to run commands directly.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ssh foobar@server ls</code> will execute ls in the home folder of foobar</li>
+  <li>It works with pipes, so <code class="language-plaintext highlighter-rouge">ssh foobar@server ls | grep PATTERN</code> will grep locally the remote output of <code class="language-plaintext highlighter-rouge">ls</code> and <code class="language-plaintext highlighter-rouge">ls | ssh foobar@server grep PATTERN</code> will grep remotely the local output of <code class="language-plaintext highlighter-rouge">ls</code>.</li>
+</ul>
+
+<h2 id="ssh-keys">SSH Keys</h2>
+
+<p>Key-based authentication exploits public-key cryptography to prove to the server that the client owns the secret private key without revealing the key. This way you do not need to reenter your password every time. Nevertheless the private key (e.g. <code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa</code>) is effectively your password so treat it like so.</p>
+
+<ul>
+  <li>Key generation. To generate a pair you can simply run <code class="language-plaintext highlighter-rouge">ssh-keygen -t rsa -b 4096</code>. If you do not choose a passphrase anyone that gets hold of your private key will be able to access authorized servers so it is recommended to choose  one and use <code class="language-plaintext highlighter-rouge">ssh-agent</code> to manage shell sessions.</li>
+</ul>
+
+<p>If you have configured pushing to Github using SSH keys you have probably done the steps outlined <a href="https://help.github.com/articles/connecting-to-github-with-ssh/">here</a> and have a valid pair already. To check if you have a passphrase and validate it you can run <code class="language-plaintext highlighter-rouge">ssh-keygen -y -f /path/to/key</code>.</p>
+
+<ul>
+  <li>Key based authentication. <code class="language-plaintext highlighter-rouge">ssh</code> will look into <code class="language-plaintext highlighter-rouge">.ssh/authorized_keys</code> to determine which clients it should let in. To copy a public key over we can use the</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> .ssh/id_dsa.pub | ssh foobar@remote <span class="s1">'cat &gt;&gt; ~/.ssh/authorized_keys'</span>
+</code></pre></div></div>
+
+<p>A simpler solution can be achieved with <code class="language-plaintext highlighter-rouge">ssh-copy-id</code> where available.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-copy-id <span class="nt">-i</span> .ssh/id_dsa.pub foobar@remote
+</code></pre></div></div>
+
+<h2 id="copying-files-over-ssh">Copying files over ssh</h2>
+
+<p>There are many ways to copy files over ssh</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ssh+tee</code>, the simplest is to use <code class="language-plaintext highlighter-rouge">ssh</code> command execution and stdin input by doing <code class="language-plaintext highlighter-rouge">cat localfile | ssh remote_server tee serverfile</code></li>
+  <li><code class="language-plaintext highlighter-rouge">scp</code> when copying large amounts of files/directories, the secure copy <code class="language-plaintext highlighter-rouge">scp</code> command is more convenient since it can easily recurse over paths. The syntax is <code class="language-plaintext highlighter-rouge">scp path/to/local_file remote_host:path/to/remote_file</code></li>
+  <li><code class="language-plaintext highlighter-rouge">rsync</code> improves upon <code class="language-plaintext highlighter-rouge">scp</code> by detecting identical files in local and remote and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the <code class="language-plaintext highlighter-rouge">--partial</code> flag that can resume from a previously interrupted copy. <code class="language-plaintext highlighter-rouge">rsync</code> has a similar syntax to <code class="language-plaintext highlighter-rouge">scp</code>.</li>
+</ul>
+
+<h2 id="backgrounding-processes">Backgrounding processes</h2>
+
+<p>By default when interrupting a ssh connection, child processes of the parent shell are killed along with it. There are a couple of alternatives</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">nohup</code> - the <code class="language-plaintext highlighter-rouge">nohup</code> tool effectively allows for a process to live when the terminal gets killed. Although this can sometimes be achieved with <code class="language-plaintext highlighter-rouge">&amp;</code> and <code class="language-plaintext highlighter-rouge">disown</code>, nohup is a better default. More details can be found <a href="https://unix.stackexchange.com/questions/3886/difference-between-nohup-disown-and">here</a>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">tmux</code>, <code class="language-plaintext highlighter-rouge">screen</code> - whereas <code class="language-plaintext highlighter-rouge">nohup</code> effectively backgrounds the process it is not convenient for interactive shell sessions. In that case using a terminal multiplexer like <code class="language-plaintext highlighter-rouge">screen</code> or <code class="language-plaintext highlighter-rouge">tmux</code> is a convenient choice since one can easily detach and reattach the associated shells.</p>
+  </li>
+</ul>
+
+<p>Lastly, if you disown a program and want to reattach it to the current terminal, you can look into <a href="https://github.com/nelhage/reptyr">reptyr</a>. <code class="language-plaintext highlighter-rouge">reptyr PID</code> will grab the process with id PID and attach it to your current terminal.</p>
+
+<h2 id="port-forwarding">Port Forwarding</h2>
+
+<p>In many scenarios you will run into software that works by listening to ports in the machine. When this happens in your local machine you can simply do <code class="language-plaintext highlighter-rouge">localhost:PORT</code> or <code class="language-plaintext highlighter-rouge">127.0.0.1:PORT</code>, but what do you do with a remote server that does not have its ports directly available through the network/internet?. This is called port forwarding and it
+comes in two flavors: Local Port Forwarding and Remote Port Forwarding (see the pictures for more details, credit of the pictures from <a href="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot">this SO post</a>).</p>
+
+<p><strong>Local Port Forwarding</strong>
+<img src="https://i.stack.imgur.com/a28N8.png" alt="Local Port Forwarding" /></p>
+
+<p><strong>Remote Port Forwarding</strong>
+<img src="https://i.stack.imgur.com/4iK3b.png" alt="Remote Port Forwarding" /></p>
+
+<p>The most common scenario is local port forwarding where a service in the remote machine listens in a port and you want to link a port in your local machine to forward to the remote port. For example if we execute  <code class="language-plaintext highlighter-rouge">jupyter notebook</code> in the remote server that listens to the port <code class="language-plaintext highlighter-rouge">8888</code>. Thus to forward that to the local port <code class="language-plaintext highlighter-rouge">9999</code> we would do <code class="language-plaintext highlighter-rouge">ssh -L 9999:localhost:8888 foobar@remote_server</code> and then navigate to <code class="language-plaintext highlighter-rouge">localhost:9999</code> in our local machine.</p>
+
+<h2 id="graphics-forwarding">Graphics Forwarding</h2>
+
+<p>Sometimes forwarding ports is not enough since we want to run a GUI based program in the server. You can always resort to Remote Desktop Software that sends the entire Desktop Environment (ie. options like RealVNC, Teamviewer, &amp;c). However for a single GUI tool, SSH provides a good alternative: Graphics Forwarding.</p>
+
+<p>Using the <code class="language-plaintext highlighter-rouge">-X</code> flag tells SSH to forward</p>
+
+<p>For trusted X11 forwarding the <code class="language-plaintext highlighter-rouge">-Y</code> flag can be used.</p>
+
+<p>Final note is that for this to work the <code class="language-plaintext highlighter-rouge">sshd_config</code> on the server must have the following options</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X11Forwarding <span class="nb">yes
+</span>X11DisplayOffset 10
+</code></pre></div></div>
+
+<h2 id="roaming">Roaming</h2>
+
+<p>A common pain when connecting to a remote server are disconnections due to shutting down/sleeping your computer or changing a network. Moreover if one has a connection with significant lag using ssh can become quite frustrating. <a href="https://mosh.org/">Mosh</a>, the mobile shell, improves upon ssh, allowing roaming connections, intermittent connectivity and providing intelligent local echo.</p>
+
+<p>Mosh is present in all common distributions and package managers. Mosh requires an ssh server to be working in the server. You do not need to be superuser to install mosh  but it does require that ports 60000 through 60010 to be open in the server (they usually are since they are not in the privileged range).</p>
+
+<p>A downside of <code class="language-plaintext highlighter-rouge">mosh</code> is that is does not support roaming port/graphics forwarding so if you use those often <code class="language-plaintext highlighter-rouge">mosh</code> won’t be of much help.</p>
+
+<h2 id="ssh-configuration">SSH Configuration</h2>
+
+<h4 id="client">Client</h4>
+
+<p>We have covered many many arguments that we can pass. A tempting alternative is to create shell aliases that look like <code class="language-plaintext highlighter-rouge">alias my_serer="ssh -X -i ~/.id_rsa -L 9999:localhost:8888 foobar@remote_server</code>, however there is a better alternative, using <code class="language-plaintext highlighter-rouge">~/.ssh/config</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host vm
+    User foobar
+    HostName 172.16.174.141
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    RemoteForward 9999 localhost:8888
+
+<span class="c"># Configs can also take wildcards</span>
+Host <span class="k">*</span>.mit.edu
+    User foobaz
+</code></pre></div></div>
+
+<p>An additional advantage of using the <code class="language-plaintext highlighter-rouge">~/.ssh/config</code> file over aliases  is that other programs like <code class="language-plaintext highlighter-rouge">scp</code>, <code class="language-plaintext highlighter-rouge">rsync</code>, <code class="language-plaintext highlighter-rouge">mosh</code>, &amp;c are able to read it as well and convert the settings into the corresponding flags.</p>
+
+<p>Note that the <code class="language-plaintext highlighter-rouge">~/.ssh/config</code> file can be considered a dotfile, and in general it is fine for it to be included with the rest of your dotfiles. However if you make it public, think about the information that you are potentially providing strangers on the internet: the addresses of your servers, the users you are using, the open ports, &amp;c. This may facilitate some types of attacks so be thoughtful about sharing your SSH configuration.</p>
+
+<p>Warning: Never include your RSA keys ( <code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa*</code> ) in a public repository!</p>
+
+<h4 id="server-side">Server side</h4>
+
+<p>Server side configuration is usually specified in <code class="language-plaintext highlighter-rouge">/etc/ssh/sshd_config</code>. Here you can make  changes like disabling password authentication, changing ssh ports, enabling X11 forwarding, &amp;c. You can specify config settings in a per user basis.</p>
+
+<h2 id="remote-filesystem">Remote Filesystem</h2>
+
+<p>Sometimes it is convenient to mount a remote folder. <a href="https://github.com/libfuse/sshfs">sshfs</a> can mount a folder on a remote server
+locally, and then you can use a local editor.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<ol>
+  <li>
+    <p>For SSH to work the host needs to be running an SSH server. Install an SSH server (such as OpenSSH) in a virtual machine so you can do the rest of the exercises. To figure out what is the ip of the machine run the command <code class="language-plaintext highlighter-rouge">ip addr</code> and look for the inet field (ignore the <code class="language-plaintext highlighter-rouge">127.0.0.1</code> entry, that corresponds to the loopback interface).</p>
+  </li>
+  <li>
+    <p>Go to <code class="language-plaintext highlighter-rouge">~/.ssh/</code> and check if you have a pair of SSH keys there. If not, generate them with <code class="language-plaintext highlighter-rouge">ssh-keygen -t rsa -b 4096</code>. It is recommended that you use a password and use <code class="language-plaintext highlighter-rouge">ssh-agent</code> , more info <a href="https://www.ssh.com/ssh/agent">here</a>.</p>
+  </li>
+  <li>
+    <p>Use <code class="language-plaintext highlighter-rouge">ssh-copy-id</code> to copy the key to your virtual machine. Test that you can ssh without a password. Then, edit your <code class="language-plaintext highlighter-rouge">sshd_config</code> in the server to disable password authentication by editing the value of <code class="language-plaintext highlighter-rouge">PasswordAuthentication</code>. Disable root login by editing the value of <code class="language-plaintext highlighter-rouge">PermitRootLogin</code>.</p>
+  </li>
+  <li>
+    <p>Edit the <code class="language-plaintext highlighter-rouge">sshd_config</code> in the server to change the ssh port and check that you can still ssh. If you ever have a public facing server, a non default port and key only login will throttle a significant amount of malicious attacks.</p>
+  </li>
+  <li>
+    <p>Install mosh in your server/VM, establish a connection and then disconnect the network adapter of the server/VM. Can mosh properly recover from it?</p>
+  </li>
+  <li>
+    <p>Another use of local port forwarding is to tunnel certain host to the server. If your network filters some website like for example <code class="language-plaintext highlighter-rouge">reddit.com</code> you can tunnel it through the server as follows:</p>
+
+    <ul>
+      <li>Run <code class="language-plaintext highlighter-rouge">ssh remote_server -L 80:reddit.com:80</code></li>
+      <li>Set <code class="language-plaintext highlighter-rouge">reddit.com</code> and <code class="language-plaintext highlighter-rouge">www.reddit.com</code> to <code class="language-plaintext highlighter-rouge">127.0.0.1</code> in <code class="language-plaintext highlighter-rouge">/etc/hosts</code></li>
+      <li>Check that you are accessing that website through the server</li>
+      <li>If it is not obvious use a website such as <a href="https://ipinfo.io/">ipinfo.io</a> which will change depending on your host public ip.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Background port forwarding can easily be achieved with a couple of extra flags. Look into what the <code class="language-plaintext highlighter-rouge">-N</code> and <code class="language-plaintext highlighter-rouge">-f</code> flags do in <code class="language-plaintext highlighter-rouge">ssh</code> and figure out what a command such as this <code class="language-plaintext highlighter-rouge">ssh -N -f -L 9999:localhost:8888 foobar@remote_server</code> does.</p>
+  </li>
+</ol>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="http://matt.might.net/articles/ssh-hacks/">SSH Hacks</a></li>
+  <li><a href="https://stribika.github.io/2015/01/04/secure-secure-shell.html">Secure Secure Shell</a></li>
+</ul>
+
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/remote-machines.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

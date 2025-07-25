@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/backups/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Backups" />
+  <meta property="og:title" content="Backups" />
+
+  
+
+  <title>
+      Backups &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Backups</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/lrpqYF8tcYQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>There are two types of people:</p>
+
+<ul>
+  <li>Those who do backups</li>
+  <li>Those who will do backups</li>
+</ul>
+
+<p>Any data you own that you haven’t backed up is data that could be gone at any moment, forever. Here we will cover some good backup basics and the pitfalls of some approaches.</p>
+
+<h2 id="3-2-1-rule">3-2-1 Rule</h2>
+
+<p>The <a href="https://www.us-cert.gov/sites/default/files/publications/data_backup_options.pdf">3-2-1 rule</a> is a general recommended strategy for backing up your data. It state that you should have:</p>
+
+<ul>
+  <li>at least <strong>3 copies</strong> of your data</li>
+  <li><strong>2</strong> copies in <strong>different mediums</strong></li>
+  <li><strong>1</strong> of the copies being <strong>offsite</strong></li>
+</ul>
+
+<p>The main idea behind this recommendation is not to put all your eggs in one basket. Having 2 different devices/disks ensures that a single hardware failure doesn’t take away all your data. Similarly, if you store your only backup at home and the house burns down or gets robbed you lose everything, that’s what the offsite copy is there for. Onsite backups give you availability and speed, offsite give you the resiliency should a disaster happen.</p>
+
+<h2 id="testing-your-backups">Testing your backups</h2>
+
+<p>A common pitfall when performing backups is blindly trusting whatever the system says it’s doing and not verifying that the data can be properly recovered. Toy Story 2 was almost lost and their backups were not working, <a href="https://www.youtube.com/watch?v=8dhp_20j0Ys">luck</a> ended up saving them.</p>
+
+<h2 id="versioning">Versioning</h2>
+
+<p>You should understand that <a href="https://en.wikipedia.org/wiki/RAID">RAID</a> is not a backup, and in general <strong>mirroring is not a backup solution</strong>. Simply syncing your files somewhere will not help in several scenarios, such as:</p>
+
+<ul>
+  <li>Data corruption</li>
+  <li>Malicious software</li>
+  <li>Deleting files by mistake</li>
+</ul>
+
+<p>If the changes on your data propagate to the backup then you won’t be able to recover in these scenarios. Note that this is the case for a lot of cloud storage solutions like Dropbox, Google Drive, One Drive, &amp;c. Some of them do keep deleted data around for short amounts of time but usually the interface to recover is not something you want to be using to recover large amounts of files.</p>
+
+<p>A proper backup system should be versioned in order to prevent this failure mode. By providing different snapshots in time one can easily navigate them to restore whatever was lost. The most widely known software of this kind is macOS Time Machine.</p>
+
+<h2 id="deduplication">Deduplication</h2>
+
+<p>However, making several copies of your data might be extremely costly in terms of disk space. Nevertheless, from one version to the next, most data will be identical and needs not be transferred again. This is where <a href="https://en.wikipedia.org/wiki/Data_deduplication">data deduplication</a> comes into play, by keeping track of what has already been stored one can do <strong>incremental backups</strong> where only the changes from one version to the next need to be stored. This significantly reduces the amount of space needed for backups beyond the first copy.</p>
+
+<h2 id="encryption">Encryption</h2>
+
+<p>Since we might be backing up to untrusted third parties like cloud providers it is worth considering that if you backup your data is copied <em>as is</em> then it could potentially be looked by unwanted agents. Documents like your taxes are sensitive information that should not be backed up in plain format. To prevent this, many backup solutions offer <strong>client side encryption</strong> where data is encrypted before being sent to the server. That way the server cannot read the data it is storing but you can decrypt it with your secret key.</p>
+
+<p>As a side note, if your disk (or home partition) is not encrypted, then anyone that get hold of your computer can manage to override the user access controls and read your data. Modern hardware supports fast and efficient read and writes of encrypted data so you might want to consider enabling <strong>full disk encryption</strong>.</p>
+
+<h2 id="append-only">Append only</h2>
+
+<p>The properties reviewed so far focus on hardware failure or user mistakes but fail to address what happens if a malicious agent wanted to delete your data. Namely, say someone hacks into your system, are they able to wipe all your copies of the data you care about? If you worry about that scenario then you need some sort of append only backup solution. In general, this means having a server that will allow you to send new data but will refuse to delete existing data. Usually users have two keys, an append only key that supports  creating new backups and a full access key that also allows for deleting old backups that are no longer needed. The latter one is stored offline.</p>
+
+<p>Note that this is a quite challenging scenario since you need the ability to make changes whilst still preventing a malicious user from deleting your data. Existing commercial solutions include <a href="https://www.tarsnap.com/">Tarsnap</a> and <a href="https://www.borgbase.com/">Borgbase</a>.</p>
+
+<h2 id="additional-considerations">Additional considerations</h2>
+
+<p>Some other things you may want to look into are:</p>
+
+<ul>
+  <li><strong>Periodic backups</strong>: outdated backups can become pretty useless. Making backups regularly should be a consideration for your system</li>
+  <li><strong>Bootable backups</strong>: some programs allow you to clone your entire disk. That way you have an image that contains an entire copy of your system you can boot directly from.</li>
+  <li><strong>Differential backup strategies</strong>, you may not necessarily care the same about all your data. You can define different backup policies for different types of data.</li>
+  <li><strong>Append only backups</strong> an additional consideration is to enforce append only operations to your backup repositories in order to prevent malicious agents to delete them if they get hold of your machine.</li>
+</ul>
+
+<h2 id="webservices">Webservices</h2>
+
+<p>Not all the data that you use lives on your hard disk. If you use <strong>webservices</strong>, then it might be the case that some data you care about, such as Google Docs presentations or Spotify playlists, is stored online. Another easy example that is easy to forget is email accounts with web access, such as Gmail. Figuring out a backup solution in these cases is somewhat trickier. However, there are many services that allow you to download your data, either directly or via an API. Tools such as <a href="https://github.com/gaubert/gmvault">gmvault</a> for Gmail are available to download the email files to your computer.</p>
+
+<h2 id="webpages">Webpages</h2>
+
+<p>Similarly, some high quality content can be found online in the form of webpages. If said content is static one can easily back it up by just saving the website and all of its attachments. Another alternative is the <a href="https://archive.org/web/">Wayback Machine</a>, a massive digital archive of the World Wide Web managed by the <a href="https://archive.org/">Internet Archive</a>, a non profit organization focused on the preservation of all sorts of media. The Wayback Machine allows you to capture and archive webpages being able to later retrieve all the snapshots that have been archived for that website. If you find it useful, consider <a href="https://archive.org/donate/">donating</a> to the project.</p>
+
+<h2 id="resources">Resources</h2>
+
+<p>Some good backup programs and services we have used and can honestly recommend:</p>
+
+<ul>
+  <li><a href="https://www.tarsnap.com/">Tarsnap</a> - deduplicated, encrypted online backup service for the truly paranoid.</li>
+  <li><a href="https://borgbackup.readthedocs.io">Borg Backup</a> - deduplicated backup program that supports compression and authenticated encryption. If you need a cloud provider <a href="https://www.rsync.net/products/borg.html">rsync.net</a> has special offerings for Borg users.</li>
+  <li><a href="https://rsync.samba.org/">rsync</a> is a utility that provides fast incremental file transfer. It is not a full backup solution.</li>
+  <li><a href="https://rclone.org/">rclone</a> like rsync but for cloud storage providers such as Amazon S3, Dropbox, Google Drive, rsync.net, &amp;c. Supports client side encryption of remote folders.</li>
+</ul>
+
+<h2 id="exercises">Exercises</h2>
+
+<ol>
+  <li>
+    <p>Consider how you are (not) backing up your data and look into fixing/improving that.</p>
+  </li>
+  <li>
+    <p>Figure out how to backup your email accounts</p>
+  </li>
+  <li>
+    <p>Choose a webservice you use often (Spotify, Google Music, etc.) and figure out what options for backing up your data are. Often people have already made tools (such as <a href="https://ytdl-org.github.io/youtube-dl/">youtube-dl</a>) solutions based on available APIs.</p>
+  </li>
+  <li>
+    <p>Think of a website you have visited repeatedly over the years and look it up in <a href="https://archive.org/web/">archive.org</a>, how many versions does it have?</p>
+  </li>
+  <li>
+    <p>One way to efficiently implement deduplication is to use hardlinks. Whereas symbolic link (also called a soft link or a symlink) is a file that points to another file or folder, a hardlink is a exact copy of the pointer (it uses the same inode and points to the same place in the disk). Thus if the original file is removed a symlink stops working whereas a hard link doesn’t. However, hardlinks only work for files. Try using the command <code class="language-plaintext highlighter-rouge">ln</code> to create hard links and compare them to symlinks created with <code class="language-plaintext highlighter-rouge">ln -s</code>. (In macOS you will need to install the gnu coreutils or the hln package).</p>
+  </li>
+</ol>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/backups.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

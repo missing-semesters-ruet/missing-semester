@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/automation/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Automation" />
+  <meta property="og:title" content="Automation" />
+
+  
+
+  <title>
+      Automation &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Automation</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/BaLlAaHz-1k" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>Sometimes you write a script that does something but you want for it to run periodically, say a backup task. You can always write an <em>ad hoc</em> solution that runs in the background and comes online periodically. However, most UNIX systems come with the cron daemon which can run task with a frequency up to a minute based on simple rules.</p>
+
+<p>On most UNIX systems the cron daemon, <code class="language-plaintext highlighter-rouge">crond</code> will be running by default but you can always check using <code class="language-plaintext highlighter-rouge">ps aux | grep crond</code>.</p>
+
+<h2 id="the-crontab">The crontab</h2>
+
+<p>The configuration file for cron can be displayed running <code class="language-plaintext highlighter-rouge">crontab -l</code> edited running <code class="language-plaintext highlighter-rouge">crontab -e</code> The time format that cron uses are five space separated fields along with the user and command</p>
+
+<ul>
+  <li><strong>minute</strong> -  What minute of the hour the command will run on,
+   and is between ‘0’ and ‘59’</li>
+  <li><strong>hour</strong> -    This controls what hour the command will run on, and is specified in
+       the 24 hour clock, values must be between 0 and 23 (0 is midnight)</li>
+  <li><strong>dom</strong> - This is the Day of Month, that you want the command run on, e.g. to
+   run a command on the 19th of each month, the dom would be 19.</li>
+  <li><strong>month</strong> -   This is the month a specified command will run on, it may be specified
+   numerically (0-12), or as the name of the month (e.g. May)</li>
+  <li><strong>dow</strong> - This is the Day of Week that you want a command to be run on, it can
+   also be numeric (0-7) or as the name of the day (e.g. sun).</li>
+  <li><strong>user</strong> -    This is the user who runs the command.</li>
+  <li><strong>command</strong> - This is the command that you want run. This field may contain
+   multiple words or spaces.</li>
+</ul>
+
+<p>Note that using an asterisk <code class="language-plaintext highlighter-rouge">*</code> means all and using an asterisk followed by a slash and number means every nth value. So <code class="language-plaintext highlighter-rouge">*/5</code> means every five. Some examples are</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">*</span>/5   <span class="k">*</span>    <span class="k">*</span>   <span class="k">*</span>   <span class="k">*</span>       <span class="c"># Every five minutes</span>
+  0   <span class="k">*</span>    <span class="k">*</span>   <span class="k">*</span>   <span class="k">*</span>       <span class="c"># Every hour at o'clock</span>
+  0   9    <span class="k">*</span>   <span class="k">*</span>   <span class="k">*</span>       <span class="c"># Every day at 9:00 am</span>
+  0   9-17 <span class="k">*</span>   <span class="k">*</span>   <span class="k">*</span>       <span class="c"># Every hour between 9:00am and 5:00pm</span>
+  0   0    <span class="k">*</span>   <span class="k">*</span>   5       <span class="c"># Every Friday at 12:00 am</span>
+  0   0    1   <span class="k">*</span>/2 <span class="k">*</span>       <span class="c"># Every other month, the first day, 12:00am</span>
+</code></pre></div></div>
+<p>You can find many more examples of common crontab schedules in <a href="https://crontab.guru/examples.html">crontab.guru</a></p>
+
+<h2 id="shell-environment-and-logging">Shell environment and logging</h2>
+
+<p>A common pitfall when using cron is that it does not load the same environment scripts that common shells do such as <code class="language-plaintext highlighter-rouge">.bashrc</code>, <code class="language-plaintext highlighter-rouge">.zshrc</code>, &amp;c and it does not log the output anywhere by default. Combined with the maximum frequency being one minute, it can become quite painful to debug cronscripts initially.</p>
+
+<p>To deal with the environment, make sure that you use absolute paths in all your scripts and modify your environment variables such as <code class="language-plaintext highlighter-rouge">PATH</code> so the script can run successfully. To simplify logging, a good recommendation is to write your crontab in a format like this</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>   user  /path/to/cronscripts/every_minute.sh <span class="o">&gt;&gt;</span> /tmp/cron_every_minute.log 2&gt;&amp;1
+</code></pre></div></div>
+
+<p>And write the script in a separate file. Remember that <code class="language-plaintext highlighter-rouge">&gt;&gt;</code> appends to the file and that <code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code> redirects <code class="language-plaintext highlighter-rouge">stderr</code> to <code class="language-plaintext highlighter-rouge">stdout</code> (you might to want keep them separate though).</p>
+
+<h2 id="anacron">Anacron</h2>
+
+<p>One caveat of using cron is that if the computer is powered off or asleep when the cron script should run then it is not executed. For frequent tasks this might be fine, but if a task runs less often, you may want to ensure that it is executed. <a href="https://linux.die.net/man/8/anacron">anacron</a> works similar to <code class="language-plaintext highlighter-rouge">cron</code> except that the frequency is specified in days. Unlike cron, it does not assume that the machine is running continuously. Hence, it can be used on machines that aren’t running 24 hours a day, to control regular jobs as daily, weekly, and monthly jobs.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<ol>
+  <li>
+    <p>Make a script that looks every minute in your downloads folder for any file that is a picture (you can look into <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">MIME types</a> or use a regular expression to match common extensions) and moves them into your Pictures folder.</p>
+  </li>
+  <li>
+    <p>Write a cron script to weekly check for outdated packages in your system and prompts you to update them or updates them automatically.</p>
+  </li>
+</ol>
+
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/automation.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

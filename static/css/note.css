@@ -1,0 +1,23 @@
+div.note {
+  background-color: #f0f7fb;
+  border-left: 10px solid #51adbf;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(81, 173, 191, 0.08);
+  padding: 15px 20px;
+  margin: 20px 0;
+  color: #333;
+  font-size: 0.9em;
+  line-height: 1.2;
+  position: relative;
+}
+
+div.note a {
+  color: #3498db;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+div.note a:hover {
+  color: #217dbb;
+  text-decoration: underline;
+}

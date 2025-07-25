@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/about/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Why we are teaching this class" />
+  <meta property="og:title" content="Why we are teaching this class" />
+
+  
+
+  <title>
+      Why we are teaching this class &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Why we are teaching this class</h1>
+
+
+
+<div class="note">
+We have left this largely unchanged; it was written for MIT.  For more from a UoB context, check out our <a href="/statement_of_intent">Statement of Intent</a>.
+</div>
+
+<p>During a traditional Computer Science education, chances are you will take
+plenty of classes that teach you advanced topics within CS, everything from
+Operating Systems to Programming Languages to Machine Learning. But at many
+institutions there is one essential topic that is rarely covered and is instead
+left for students to pick up on their own: computing ecosystem literacy.</p>
+
+<p>Over the years, we have helped teach several classes at MIT, and over and over
+we have seen that many students have limited knowledge of the tools available
+to them. Computers were built to automate manual tasks, yet students often
+perform repetitive tasks by hand or fail to take full advantage of powerful
+tools such as version control and text editors. In the best case, this results
+in inefficiencies and wasted time; in the worst case, it results in issues like
+data loss or inability to complete certain tasks.</p>
+
+<p>These topics are not taught as part of the university curriculum: students are
+never shown how to use these tools, or at least not how to use them
+efficiently, and thus waste time and effort on tasks that <em>should</em> be simple.
+The standard CS curriculum is missing critical topics about the computing
+ecosystem that could make students’ lives significantly easier.</p>
+
+<h1 id="the-missing-semester-of-your-cs-education">The missing semester of your CS education</h1>
+
+<p>To help remedy this, we are running a class that covers all the topics we
+consider crucial to be an effective computer scientist and programmer. The
+class is pragmatic and practical, and it provides hands-on introduction to
+tools and techniques that you can immediately apply in a wide variety of
+situations you will encounter. The class is being run during MIT’s “Independent
+Activities Period” in January 2020 — a one-month semester that features shorter
+student-run classes. While the lectures themselves are only available to MIT
+students, we will provide all lecture materials along with video recordings of
+lectures to the public.</p>
+
+<p>If this sounds like it might be for you, here are some concrete
+examples of what the class will teach:</p>
+
+<h2 id="command-shell">Command shell</h2>
+
+<p>How to automate common and repetitive tasks with aliases, scripts,
+and build systems. No more copy-pasting commands from a text
+document. No more “run these 15 commands one after the other”. No
+more “you forgot to run this thing” or “you forgot to pass this
+argument”.</p>
+
+<p>For example, searching through your history quickly can be a huge time saver. In the example below we show several tricks related to navigating your shell history for <code class="language-plaintext highlighter-rouge">convert</code> commands.</p>
+
+<video autoplay="autoplay" loop="loop" controls="" muted="" playsinline="" oncontextmenu="return false;" preload="auto" class="demo">
+  <source src="/static/media/demos/history.mp4" type="video/mp4" />
+</video>
+
+<h2 id="version-control">Version control</h2>
+
+<p>How to use version control <em>properly</em>, and take advantage of it to
+save you from disaster, collaborate with others, and quickly find and
+isolate problematic changes. No more <code class="language-plaintext highlighter-rouge">rm -rf; git clone</code>. No more
+merge conflicts (well, fewer of them at least). No more huge blocks
+of commented-out code. No more fretting over how to find what broke
+your code. No more “oh no, did we delete the working code?!”. We’ll
+even teach you how to contribute to other people’s projects with pull
+requests!</p>
+
+<p>In the example below we use <code class="language-plaintext highlighter-rouge">git bisect</code> to find which commit broke a unit test and then we fix it with <code class="language-plaintext highlighter-rouge">git revert</code>.</p>
+<video autoplay="autoplay" loop="loop" controls="" muted="" playsinline="" oncontextmenu="return false;" preload="auto" class="demo">
+
+  <source src="/static/media/demos/git.mp4" type="video/mp4" />
+</video>
+
+<h2 id="text-editing">Text editing</h2>
+
+<p>How to efficiently edit files from the command-line, both locally and
+remotely, and take advantage of advanced editor features. No more
+copying files back and forth. No more repetitive file editing.</p>
+
+<p>Vim macros are one of its best features, in the example below we quickly convert an html table to csv format using a nested vim macro.</p>
+<video autoplay="autoplay" loop="loop" controls="" muted="" playsinline="" oncontextmenu="return false;" preload="auto" class="demo">
+
+  <source src="/static/media/demos/vim.mp4" type="video/mp4" />
+</video>
+
+<h2 id="remote-machines">Remote machines</h2>
+
+<p>How to stay sane when working with remote machines using SSH keys and
+terminal multiplexing. No more keeping many terminals open just to
+run two commands at once. No more typing your password every time you
+connect. No more losing everything just because your Internet
+disconnected or you had to reboot your laptop.</p>
+
+<p>In the example below we use <code class="language-plaintext highlighter-rouge">tmux</code> to keep sessions alive in remote servers and <code class="language-plaintext highlighter-rouge">mosh</code> to support network roaming and disconnection.</p>
+
+<video autoplay="autoplay" loop="loop" controls="" muted="" playsinline="" oncontextmenu="return false;" preload="auto" class="demo">
+  <source src="/static/media/demos/ssh.mp4" type="video/mp4" />
+</video>
+
+<h2 id="finding-files">Finding files</h2>
+
+<p>How to quickly find files that you are looking for. No
+more clicking through files in your project until you find the one
+that has the code you want.</p>
+
+<p>In the example below we quickly look for files with <code class="language-plaintext highlighter-rouge">fd</code> and for code snippets with <code class="language-plaintext highlighter-rouge">rg</code>. We also quickly <code class="language-plaintext highlighter-rouge">cd</code> and <code class="language-plaintext highlighter-rouge">vim</code> recent/frequent files/folder using <code class="language-plaintext highlighter-rouge">fasd</code>.</p>
+
+<video autoplay="autoplay" loop="loop" controls="" muted="" playsinline="" oncontextmenu="return false;" preload="auto" class="demo">
+  <source src="/static/media/demos/find.mp4" type="video/mp4" />
+</video>
+
+<h2 id="data-wrangling">Data wrangling</h2>
+
+<p>How to quickly and easily modify, view, parse, plot, and compute over
+data and files directly from the command-line. No more copy pasting
+from log files. No more manually computing statistics over data. No
+more spreadsheet plotting.</p>
+
+<h2 id="virtual-machines">Virtual machines</h2>
+
+<p>How to use virtual machines to try out new operating systems, isolate
+unrelated projects, and keep your main machine clean and tidy. No
+more accidentally corrupting your computer while doing a security
+lab. No more millions of randomly installed packages with differing
+versions.</p>
+
+<h2 id="security">Security</h2>
+
+<p>How to be on the Internet without immediately revealing all of your
+secrets to the world. No more coming up with passwords that match the
+insane criteria yourself. No more unsecured, open WiFi networks. No
+more unencrypted messaging.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>This, and more, will be covered across the 12 class lectures, each including an
+exercise for you to get more familiar with the tools on your own. If you can’t
+wait for January, you can also take a look at the lectures from <a href="https://hacker-tools.github.io/lectures/">Hacker
+Tools</a>, which we ran during IAP last
+year. It is the precursor to this class, and covers many of the same topics.</p>
+
+<p>We hope to see you in January, whether virtually or in person!</p>
+
+<p>Happy hacking,<br />
+Anish, Jose, and Jon</p>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/about.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/version-control/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Version Control" />
+  <meta property="og:title" content="Version Control" />
+
+  
+
+  <title>
+      Version Control &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Version Control</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/3fig2Vz8QXs" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>Whenever you are working on something that changes over time, it’s
+useful to be able to <em>track</em> those changes. This can be for a number of
+reasons: it gives you a record of what changed, how to undo it, who
+changed it, and possibly even why. Version control systems (VCS) give
+you that ability. They let you <em>commit</em> changes to a set of files, along
+with a message describing the change, as well as look at and undo
+changes you’ve made in the past.</p>
+
+<p>Most VCS support sharing the commit history between multiple users. This
+allows for convenient collaboration: you can see the changes I’ve made,
+and I can see the changes you’ve made. And since the VCS tracks
+<em>changes</em>, it can often (though not always) figure out how to combine
+our changes as long as they touch relatively disjoint things.</p>
+
+<p>There <a href="https://en.wikipedia.org/wiki/Comparison_of_version-control_software"><em>a
+lot</em></a>
+of VCSes out there that differ a lot in what they support, how they
+function, and how you interact with them. Here, we’ll focus on
+<a href="https://git-scm.com/">git</a>, one of the more commonly used ones, but I
+recommend you also take a look at
+<a href="https://www.mercurial-scm.org/">Mercurial</a>.</p>
+
+<p>With that all said – to the cliffnotes!</p>
+
+<h2 id="is-git-dark-magic">Is git dark magic?</h2>
+
+<p>not quite.. you need to understand the data model.
+we’re going to skip over some of the details, but roughly speaking,
+the <em>core</em> “thing” in git is a commit.</p>
+
+<ul>
+  <li>every commit has a unique name, “revision hash”
+a long hash like <code class="language-plaintext highlighter-rouge">998622294a6c520db718867354bf98348ae3c7e2</code>
+often shortened to a short (unique-ish) prefix: <code class="language-plaintext highlighter-rouge">9986222</code></li>
+  <li>commit has author + commit message</li>
+  <li>also has the hash of any <em>ancestor commits</em>
+usually just the hash of the previous commit</li>
+  <li>commit also represents a <em>diff</em>, a representation of how you get from
+the commit’s ancestors to the commit (e.g., remove this line in this
+file, add these lines to this file, rename that file, etc.)
+    <ul>
+      <li>in reality, git stores the full before and after state</li>
+      <li>probably don’t want to store big files that change!</li>
+    </ul>
+  </li>
+</ul>
+
+<p>initially, the <em>repository</em> (roughly: the folder that git manages) has
+no content, and no commits. let’s set that up:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>git init hackers
+<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>hackers
+<span class="gp">$</span><span class="w"> </span>git status
+</code></pre></div></div>
+
+<p>the output here actually gives us a good starting point. let’s dig in
+and make sure we understand it all.</p>
+
+<p>first, “On branch master”.</p>
+
+<ul>
+  <li>don’t want to use hashes all the time.</li>
+  <li>branches are names that point to hashes.</li>
+  <li>master is traditionally the name for the “latest” commit.
+every time a new commit is made, the master name will be made to
+point to the new commit’s hash.</li>
+  <li>special name <code class="language-plaintext highlighter-rouge">HEAD</code> refers to “current” name</li>
+  <li>you can also make your own names with <code class="language-plaintext highlighter-rouge">git branch</code> (or <code class="language-plaintext highlighter-rouge">git tag</code>)
+we’ll get back to that</li>
+</ul>
+
+<p>let’s skip over “No commits yet” because that’s all there is to it.</p>
+
+<p>then, “nothing to commit”.</p>
+
+<ul>
+  <li>every commit contains a diff with all the changes you made.
+but how is that diff constructed in the first place?</li>
+  <li><em>could</em> just always commit <em>all</em> changes you’ve made since the last
+commit
+    <ul>
+      <li>sometimes you want to only commit some of them (e.g., not <code class="language-plaintext highlighter-rouge">TODO</code>s)</li>
+      <li>sometimes you want to break up a change into multiple commits to
+give a separate commit message for each one</li>
+    </ul>
+  </li>
+  <li>git lets you <em>stage</em> changes to construct a commit
+    <ul>
+      <li>add changes to a file or files to the staged changes with <code class="language-plaintext highlighter-rouge">git add</code>
+        <ul>
+          <li>add only some changes in a file with <code class="language-plaintext highlighter-rouge">git add -p</code></li>
+          <li>without argument <code class="language-plaintext highlighter-rouge">git add</code> operates on “all known files”</li>
+        </ul>
+      </li>
+      <li>remove a file and stage its removal with <code class="language-plaintext highlighter-rouge">git rm</code></li>
+      <li>empty the set of staged changes <code class="language-plaintext highlighter-rouge">git reset</code>
+        <ul>
+          <li>note that this does <em>not</em> change any of your files!
+it <em>only</em> means that no changes will be included in a commit</li>
+          <li>to remove only some staged changes:
+<code class="language-plaintext highlighter-rouge">git reset FILE</code> or <code class="language-plaintext highlighter-rouge">git reset -p</code></li>
+        </ul>
+      </li>
+      <li>check staged changes with <code class="language-plaintext highlighter-rouge">git diff --staged</code></li>
+      <li>see remaining changes with <code class="language-plaintext highlighter-rouge">git diff</code></li>
+      <li>when you’re happy with the stage, make a commit with <code class="language-plaintext highlighter-rouge">git commit</code>
+        <ul>
+          <li>if you just want to commit <em>all</em> changes: <code class="language-plaintext highlighter-rouge">git commit -a</code></li>
+          <li><code class="language-plaintext highlighter-rouge">git help add</code> has a bunch more helpful info</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>while you’re playing with the above, try to run <code class="language-plaintext highlighter-rouge">git status</code> to see what
+git thinks you’re doing – it’s surprisingly helpful!</p>
+
+<h2 id="a-commit-you-say">A commit you say…</h2>
+
+<p>okay, we have a commit, now what?</p>
+
+<ul>
+  <li>we can look at recent changes: <code class="language-plaintext highlighter-rouge">git log</code> (or <code class="language-plaintext highlighter-rouge">git log --oneline</code>)</li>
+  <li>we can look at the full changes: <code class="language-plaintext highlighter-rouge">git log -p</code></li>
+  <li>we can show a particular commit: <code class="language-plaintext highlighter-rouge">git show master</code>
+    <ul>
+      <li>or with <code class="language-plaintext highlighter-rouge">-p</code> for full diff/patch</li>
+    </ul>
+  </li>
+  <li>we can go back to the state at a commit using <code class="language-plaintext highlighter-rouge">git checkout NAME</code>
+    <ul>
+      <li>if <code class="language-plaintext highlighter-rouge">NAME</code> is a commit hash, git says we’re “detached”. this just
+means there’s no <code class="language-plaintext highlighter-rouge">NAME</code> that refers to this commit, so if we make
+commits, no-one will know about them.</li>
+    </ul>
+  </li>
+  <li>we can revert a change with <code class="language-plaintext highlighter-rouge">git revert NAME</code>
+    <ul>
+      <li>applies the diff in the commit at <code class="language-plaintext highlighter-rouge">NAME</code> in reverse.</li>
+    </ul>
+  </li>
+  <li>we can compare an older version to this one using <code class="language-plaintext highlighter-rouge">git diff NAME..</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">a..b</code> is a commit <em>range</em>. if either is left out, it means <code class="language-plaintext highlighter-rouge">HEAD</code>.</li>
+    </ul>
+  </li>
+  <li>we can show all the commits between using <code class="language-plaintext highlighter-rouge">git log NAME..</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">-p</code> works here too</li>
+    </ul>
+  </li>
+  <li>we can change <code class="language-plaintext highlighter-rouge">master</code> to point to a particular commit (effectively
+undoing everything since) with <code class="language-plaintext highlighter-rouge">git reset NAME</code>:
+    <ul>
+      <li>huh, why? wasn’t <code class="language-plaintext highlighter-rouge">reset</code> to change staged changes?
+reset has a “second” form (see <code class="language-plaintext highlighter-rouge">git help reset</code>) which sets <code class="language-plaintext highlighter-rouge">HEAD</code>
+to the commit pointed to by the given name.</li>
+      <li>notice that this didn’t change any files – <code class="language-plaintext highlighter-rouge">git diff</code> now
+effectively shows <code class="language-plaintext highlighter-rouge">git diff NAME..</code>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="whats-in-a-name">What’s in a name?</h2>
+
+<p>clearly, names are important in git. and they’re the key to
+understanding <em>a lot</em> of what goes on in git. so far, we’ve talked about
+commit hashes, master, and <code class="language-plaintext highlighter-rouge">HEAD</code>. but there’s more!</p>
+
+<ul>
+  <li>you can make your own branches (like master) with <code class="language-plaintext highlighter-rouge">git branch b</code>
+    <ul>
+      <li>creates a new name, <code class="language-plaintext highlighter-rouge">b</code>, which points to the commit at <code class="language-plaintext highlighter-rouge">HEAD</code></li>
+      <li>you’re still “on” master though, so if you make a new commit,
+master will point to that new commit, <code class="language-plaintext highlighter-rouge">b</code> will not.</li>
+      <li>switch to a branch with <code class="language-plaintext highlighter-rouge">git checkout b</code>
+        <ul>
+          <li>any commits you make will now update the <code class="language-plaintext highlighter-rouge">b</code> name</li>
+          <li>switch back to master with <code class="language-plaintext highlighter-rouge">git checkout master</code>
+            <ul>
+              <li>all your changes in <code class="language-plaintext highlighter-rouge">b</code> are hidden away</li>
+            </ul>
+          </li>
+          <li>a very handy way to be able to easily test out changes</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>tags are other names that never change, and that have their own
+message. often used to mark releases + changelogs.</li>
+  <li><code class="language-plaintext highlighter-rouge">NAME^</code> means “the commit before <code class="language-plaintext highlighter-rouge">NAME</code>
+    <ul>
+      <li>can apply recursively: <code class="language-plaintext highlighter-rouge">NAME^^^</code></li>
+      <li>you <em>most likely</em> mean <code class="language-plaintext highlighter-rouge">~</code> when you use <code class="language-plaintext highlighter-rouge">~</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">~</code> is “temporal”, whereas <code class="language-plaintext highlighter-rouge">^</code> goes by ancestors</li>
+          <li><code class="language-plaintext highlighter-rouge">~~</code> is the same as <code class="language-plaintext highlighter-rouge">^^</code></li>
+          <li>with <code class="language-plaintext highlighter-rouge">~</code> you can also write <code class="language-plaintext highlighter-rouge">X~3</code> for “3 commits older than <code class="language-plaintext highlighter-rouge">X</code></li>
+          <li>you don’t want <code class="language-plaintext highlighter-rouge">^3</code></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">git diff HEAD^</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">-</code> means “the previous name”</li>
+  <li>most commands operate on <code class="language-plaintext highlighter-rouge">HEAD</code> unless you give another argument</li>
+</ul>
+
+<h2 id="clean-up-your-mess">Clean up your mess</h2>
+
+<p>your commit history will <em>very</em> often end up as:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">add feature x</code> – maybe even with a commit message about <code class="language-plaintext highlighter-rouge">x</code>!</li>
+  <li><code class="language-plaintext highlighter-rouge">forgot to add file</code></li>
+  <li><code class="language-plaintext highlighter-rouge">fix bug</code></li>
+  <li><code class="language-plaintext highlighter-rouge">typo</code></li>
+  <li><code class="language-plaintext highlighter-rouge">typo2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">actually fix</code></li>
+  <li><code class="language-plaintext highlighter-rouge">actually actually fix</code></li>
+  <li><code class="language-plaintext highlighter-rouge">tests pass</code></li>
+  <li><code class="language-plaintext highlighter-rouge">fix example code</code></li>
+  <li><code class="language-plaintext highlighter-rouge">typo</code></li>
+  <li><code class="language-plaintext highlighter-rouge">x</code></li>
+  <li><code class="language-plaintext highlighter-rouge">x</code></li>
+  <li><code class="language-plaintext highlighter-rouge">x</code></li>
+  <li><code class="language-plaintext highlighter-rouge">x</code></li>
+</ul>
+
+<p>that’s <em>fine</em> as far as git is concerned, but is not very helpful to
+your future self, or to other people who are curious about what has
+changed. git lets you clean up these things:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git commit --amend</code>: fold staged changes into previous commit
+    <ul>
+      <li>note that this <em>changes</em> the previous commit, giving it a new hash!</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">git rebase -i HEAD~13</code> is <em>magical</em>.
+for each commit from past 13, choose what to do:
+    <ul>
+      <li>default is <code class="language-plaintext highlighter-rouge">pick</code>; do nothing</li>
+      <li><code class="language-plaintext highlighter-rouge">r</code>: change commit message</li>
+      <li><code class="language-plaintext highlighter-rouge">e</code>: change commit (add or remove files)</li>
+      <li><code class="language-plaintext highlighter-rouge">s</code>: combine commit with previous and edit commit message</li>
+      <li><code class="language-plaintext highlighter-rouge">f</code>: “fixup” – combine commit with previous; discard commit msg</li>
+      <li>at the end, <code class="language-plaintext highlighter-rouge">HEAD</code> is made to point to what is now the last commit</li>
+      <li>often referred to as <em>squashing</em> commits</li>
+      <li>what it really does: rewind <code class="language-plaintext highlighter-rouge">HEAD</code> to rebase start point, then
+re-apply the commits in order as directed.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">git reset --hard NAME</code>: reset the state of all files to that of
+<code class="language-plaintext highlighter-rouge">NAME</code> (or <code class="language-plaintext highlighter-rouge">HEAD</code> if no name is given). handy for undoing changes.</li>
+</ul>
+
+<h2 id="playing-with-others">Playing with others</h2>
+
+<p>a common use-case for version control is to allow multiple people to
+make changes to a set of files without stepping on each other’s toes.
+or rather, to make sure that <em>if</em> they step on each other’s toes, they
+won’t just silently overwrite each other’s changes.</p>
+
+<p>git is a <em>distributed</em> VCS: everyone has a local copy of the entire
+repository (well, of everything others have chosen to publish). some
+VCSes are <em>centralized</em> (e.g., subversion): a server has all the
+commits, clients only have the files they have “checked out”. basically,
+they only have the <em>current</em> files, and need to ask the server if they
+want anything else.</p>
+
+<p>every copy of a git repository can be listed as a “remote”. you can copy
+an existing git repository using <code class="language-plaintext highlighter-rouge">git clone ADDRESS</code> (instead of <code class="language-plaintext highlighter-rouge">git
+init</code>). this creates a remote called <em>origin</em> that points to <code class="language-plaintext highlighter-rouge">ADDRESS</code>.
+you can fetch names and the commits they point to from a remote with
+<code class="language-plaintext highlighter-rouge">git fetch REMOTE</code>. all names at a remote are available to you as
+<code class="language-plaintext highlighter-rouge">REMOTE/NAME</code>, and you can use them just like local names.</p>
+
+<p>if you have write access to a remote, you can change names at the remote
+to point to commits you’ve made using <code class="language-plaintext highlighter-rouge">git push</code>. for example, let’s
+make the master name (branch) at the remote <code class="language-plaintext highlighter-rouge">origin</code> point to the commit
+that our master branch currently points to:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git push origin master:master</code></li>
+  <li>for convenience, you can set <code class="language-plaintext highlighter-rouge">origin/master</code> as the default target
+for when you <code class="language-plaintext highlighter-rouge">git push</code> from the current branch with <code class="language-plaintext highlighter-rouge">-u</code></li>
+  <li>consider: what does this do? <code class="language-plaintext highlighter-rouge">git push origin master:HEAD^</code></li>
+</ul>
+
+<p>often you’ll use GitHub, GitLab, BitBucket, or something else as your
+remote. there’s nothing “special” about that as far as git is concerned.
+it’s all just names and commits. if someone makes a change to master and
+updates <code class="language-plaintext highlighter-rouge">github/master</code> to point to their commit (we’ll get back to
+that in a second), then when you <code class="language-plaintext highlighter-rouge">git fetch github</code>, you’ll be able to
+see their changes with <code class="language-plaintext highlighter-rouge">git log github/master</code>.</p>
+
+<h2 id="working-with-others">Working with others</h2>
+
+<p>so far, branches seem pretty useless: you can create them, do work on
+them, but then what? eventually, you’ll just make master point to them
+anyway, right?</p>
+
+<ul>
+  <li>what if you had to fix something while working on a big feature?</li>
+  <li>what if someone else made a change to master in the meantime?</li>
+</ul>
+
+<p>inevitably, you will have to <em>merge</em> changes in one branch with changes
+in another, whether those changes are made by you or someone else. git
+lets you do this with, unsurprisingly, <code class="language-plaintext highlighter-rouge">git merge NAME</code>. <code class="language-plaintext highlighter-rouge">merge</code> will:</p>
+
+<ul>
+  <li>look for the latest point where <code class="language-plaintext highlighter-rouge">HEAD</code> and <code class="language-plaintext highlighter-rouge">NAME</code> shared a commit
+ancestor (i.e., where they diverged)</li>
+  <li>(try to) apply all those changes to the current <code class="language-plaintext highlighter-rouge">HEAD</code></li>
+  <li>produce a commit that contains all those changes, and lists both
+<code class="language-plaintext highlighter-rouge">HEAD</code> and <code class="language-plaintext highlighter-rouge">NAME</code> as its ancestors</li>
+  <li>set <code class="language-plaintext highlighter-rouge">HEAD</code> to that commit’s hash</li>
+</ul>
+
+<p>once your big feature has been finished, you can merge its branch into
+master, and git will ensure that you don’t lose any changes from either
+branch!</p>
+
+<p>if you’ve used git in the past, you may recognize <code class="language-plaintext highlighter-rouge">merge</code> by a different
+name: <code class="language-plaintext highlighter-rouge">pull</code>. when you do <code class="language-plaintext highlighter-rouge">git pull REMOTE BRANCH</code>, that is:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git fetch REMOTE</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git merge REMOTE/BRANCH</code></li>
+  <li>where, like <code class="language-plaintext highlighter-rouge">push</code>, <code class="language-plaintext highlighter-rouge">REMOTE</code> and <code class="language-plaintext highlighter-rouge">BRANCH</code> are often omitted and use
+the “tracking” remote branch (remember <code class="language-plaintext highlighter-rouge">-u</code>?)</li>
+</ul>
+
+<p>this usually works <em>great</em>. as long as the changes to the branches being
+merged are disjoint. if they are not, you get a <em>merge conflict</em>. sounds
+scary…</p>
+
+<ul>
+  <li>a merge conflict is just git telling you that it doesn’t know what
+the final diff should look like</li>
+  <li>git pauses and asks you to finish staging the “merge commit”</li>
+  <li>open the conflicted file in your editor and look for lots of angle
+brackets (<code class="language-plaintext highlighter-rouge">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>). the stuff above <code class="language-plaintext highlighter-rouge">=======</code> is the change made in
+the <code class="language-plaintext highlighter-rouge">HEAD</code> since the shared ancestor commit. the stuff below is the
+change made in the <code class="language-plaintext highlighter-rouge">NAME</code> since the shared commit.</li>
+  <li><code class="language-plaintext highlighter-rouge">git mergetool</code> is pretty handy – opens a diff editor</li>
+  <li>once you’ve <em>resolved</em> the conflict by figuring out what the file
+should now look like, stage those changes with <code class="language-plaintext highlighter-rouge">git add</code>.</li>
+  <li>when all the conflicts are resolved, finish with <code class="language-plaintext highlighter-rouge">git commit</code>
+    <ul>
+      <li>you can give up with <code class="language-plaintext highlighter-rouge">git merge --abort</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>you’ve just resolved your first git merge conflict! \o/
+now you can publish your finished changes with <code class="language-plaintext highlighter-rouge">git push</code></p>
+
+<h2 id="when-worlds-collide">When worlds collide</h2>
+
+<p>when you <code class="language-plaintext highlighter-rouge">push</code>, git checks that no-one else’s work is lost if you
+update the remote name you’re pushing too. it does this by checking
+that the current commit of the remote name is an ancestor of the commit
+you are pushing. if it is, git can safely just update the name; this is
+called <em>fast-forwarding</em>. if it is not, git will refuse to update the
+remote name, and tell you there have been changes.</p>
+
+<p>if your push is rejected, what do you do?</p>
+
+<ul>
+  <li>merge remote changes with <code class="language-plaintext highlighter-rouge">git pull</code> (i.e., <code class="language-plaintext highlighter-rouge">fetch</code> + <code class="language-plaintext highlighter-rouge">merge</code>)</li>
+  <li>force the push with <code class="language-plaintext highlighter-rouge">--force</code>: this will lose other people’s changes!
+    <ul>
+      <li>there’s also <code class="language-plaintext highlighter-rouge">--force-with-lease</code>, which will only force the change
+if the remote name hasn’t changed since the last time you fetched
+from that remote. much safer!</li>
+      <li>if you’ve rebased local commits that you’ve previously pushed
+(“history rewriting”; probably don’t do this), you’ll have to force
+push. think about why!</li>
+    </ul>
+  </li>
+  <li>try to re-apply your changes “on top of” the changes made remotely
+    <ul>
+      <li>this is a <code class="language-plaintext highlighter-rouge">rebase</code>!
+        <ul>
+          <li>rewind all local commits since shared ancestor</li>
+          <li>fast-forward <code class="language-plaintext highlighter-rouge">HEAD</code> to commit at remote name</li>
+          <li>apply local commits in-order
+            <ul>
+              <li>may have conflicts you have to manually resolve</li>
+              <li><code class="language-plaintext highlighter-rouge">git rebase --continue</code> or <code class="language-plaintext highlighter-rouge">--abort</code></li>
+            </ul>
+          </li>
+          <li>lots more <a href="https://git-scm.com/book/en/v2/Git-Branching-Rebasing">here</a></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">git pull --rebase</code> will start this process for you</li>
+      <li>whether you should merge or rebase is a hot topic! some good reads:
+        <ul>
+          <li><a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">this</a></li>
+          <li><a href="http://web.archive.org/web/20210106220723/https://derekgourlay.com/blog/git-when-to-merge-vs-when-to-rebase/">this</a></li>
+          <li><a href="https://stackoverflow.com/questions/804115/when-do-you-use-git-rebase-instead-of-git-merge">this</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="further-reading">Further reading</h1>
+
+<p><a href="https://xkcd.com/1597/"><img src="https://imgs.xkcd.com/comics/git.png" alt="XKCD on git" /></a></p>
+
+<ul>
+  <li><a href="https://learngitbranching.js.org/">Learn git branching</a></li>
+  <li><a href="https://smusamashah.github.io/blog/2017/10/14/explain-git-in-simple-words">How to explain git in simple words</a></li>
+  <li><a href="https://jwiegley.github.io/git-from-the-bottom-up/">Git from the bottom up</a></li>
+  <li><a href="http://eagain.net/articles/git-for-computer-scientists/">Git for computer scientists</a></li>
+  <li><a href="https://ohshitgit.com/">Oh shit, git!</a></li>
+  <li><a href="https://git-scm.com/book/en/v2">The Pro Git book</a></li>
+</ul>
+
+<h1 id="exercises">Exercises</h1>
+
+<ol>
+  <li>
+    <p>On a repo try modifying an existing file. What happens when you do <code class="language-plaintext highlighter-rouge">git stash</code>? What do you see when running <code class="language-plaintext highlighter-rouge">git log --all --oneline</code>? Run <code class="language-plaintext highlighter-rouge">git stash pop</code> to undo what you did with <code class="language-plaintext highlighter-rouge">git stash</code>. In what scenario might this be useful?</p>
+  </li>
+  <li>
+    <p>One common mistake when learning git is to commit large files that should not be managed by git or adding sensitive information. Try adding a file to a repository, making some commits and then deleting that file from history (you may want to look at <a href="https://help.github.com/articles/removing-sensitive-data-from-a-repository/">this</a>). Also if you do want git to manage large  files for you, look into <a href="https://git-lfs.github.com/">Git-LFS</a></p>
+  </li>
+  <li>Git is really convenient for undoing changes but one has to be familiar even with the most unlikely changes
+    <ol>
+      <li>If a file is mistakenly modified in some commit it can be reverted with <code class="language-plaintext highlighter-rouge">git revert</code>. However if a commit involves several changes <code class="language-plaintext highlighter-rouge">revert</code> might not be the best option. How can we use <code class="language-plaintext highlighter-rouge">git checkout</code> to recover a file version from a specific commit?</li>
+      <li>Create a branch, make a commit in said branch and then delete it. Can you still recover said commit? Try looking into <code class="language-plaintext highlighter-rouge">git reflog</code>. (Note: Recover dangling things quickly, git will periodically automatically clean up commits that nothing points to.)</li>
+      <li>If one is too trigger happy with <code class="language-plaintext highlighter-rouge">git reset --hard</code> instead of <code class="language-plaintext highlighter-rouge">git reset</code> changes can be easily lost. However since the changes were staged, we can recover them. (look into <code class="language-plaintext highlighter-rouge">git fsck --lost-found</code> and <code class="language-plaintext highlighter-rouge">.git/lost-found</code>)</li>
+    </ol>
+  </li>
+  <li>
+    <p>In any git repo look under the folder <code class="language-plaintext highlighter-rouge">.git/hooks</code> you will find a bunch of scripts that end with <code class="language-plaintext highlighter-rouge">.sample</code>. If you rename them without the <code class="language-plaintext highlighter-rouge">.sample</code> they will run based on their name. For instance <code class="language-plaintext highlighter-rouge">pre-commit</code> will execute before doing a commit. Experiment with them</p>
+  </li>
+  <li>
+    <p>Like many command line tools <code class="language-plaintext highlighter-rouge">git</code> provides a configuration file (or dotfile) called <code class="language-plaintext highlighter-rouge">~/.gitconfig</code> . Create and alias using <code class="language-plaintext highlighter-rouge">~/.gitconfig</code> so that when you run <code class="language-plaintext highlighter-rouge">git graph</code> you get the output of <code class="language-plaintext highlighter-rouge">git log --oneline --decorate --all --graph</code> (this is a good command to quickly visualize the commit graph)</p>
+  </li>
+  <li>
+    <p>Git also lets you define global ignore patterns under <code class="language-plaintext highlighter-rouge">~/.gitignore_global</code>, this is useful to prevent common errors like adding RSA keys. Create a <code class="language-plaintext highlighter-rouge">~/.gitignore_global</code> file and add the pattern <code class="language-plaintext highlighter-rouge">*rsa</code>, then test that it works in a repo.</p>
+  </li>
+  <li>
+    <p>Once you start to get more familiar with <code class="language-plaintext highlighter-rouge">git</code>, you will find yourself running into common tasks, such as editing your <code class="language-plaintext highlighter-rouge">.gitignore</code>. <a href="https://github.com/tj/git-extras/blob/master/Commands.md">git extras</a> provides a bunch of little utilities that integrate with <code class="language-plaintext highlighter-rouge">git</code>. For example <code class="language-plaintext highlighter-rouge">git ignore PATTERN</code> will add the specified pattern to the <code class="language-plaintext highlighter-rouge">.gitignore</code> file in your repo and <code class="language-plaintext highlighter-rouge">git ignore-io LANGUAGE</code> will fetch the common ignore patterns for that language from <a href="https://www.gitignore.io">gitignore.io</a>. Install <code class="language-plaintext highlighter-rouge">git extras</code> and try using some tools like <code class="language-plaintext highlighter-rouge">git alias</code> or <code class="language-plaintext highlighter-rouge">git ignore</code>.</p>
+  </li>
+  <li>
+    <p>Git GUI programs can be a great resource sometimes. Try running <a href="https://git-scm.com/docs/gitk">gitk</a> in a git repo an explore the different parts of the interface. Then run <code class="language-plaintext highlighter-rouge">gitk --all</code> what are the differences?</p>
+  </li>
+  <li>Once you get used to command line applications GUI tools can feel cumbersome/bloated. A nice compromise between the two are ncurses based tools which can be navigated from the command line and still provide an interactive interface. Git has <a href="https://github.com/jonas/tig">tig</a>, try installing it and running it in a repo. You can find some usage examples <a href="https://www.atlassian.com/blog/git/git-tig">here</a>.</li>
+</ol>
+
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/version-control.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>

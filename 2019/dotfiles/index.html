@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="og:url" content="https://missing-semesters-ruet.github.io/2019/dotfiles/" />
+  <meta property="og:site_name" content="The Missing Semesters of Your CS" />
+
+   
+  <meta name="twitter:title" content="Dotfiles" />
+  <meta property="og:title" content="Dotfiles" />
+
+  
+
+  <title>
+      Dotfiles &middot; The Missing Semesters of Your CS  
+  </title>
+
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/syntax.css" />
+  <link rel="stylesheet" href="/static/css/note.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900&subset=latin,latin-ext"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-P7WVHD84D1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-P7WVHD84D1");
+  </script>
+</head>
+
+
+  <body>
+
+    <div id="nav-bg">
+  <nav id="top-nav">
+    <a href="/" id="logo">./missing-semester</a>
+    <input type="checkbox" id="menu-icon" />
+    <label class="menu-label" for="menu-icon"></label>
+    <div class="trigger">
+      <div class="trigger-child">
+        <span class="nav-link"><a href="/2025/">lectures</a></span>
+        <span class="nav-link">
+          <a href="/statement_of_intent">statement of intent</a>
+        </span>
+        <span class="nav-link"><a href="/about/">about</a></span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+    <div id="content">
+    <h1 class="title">Dotfiles</h1>
+
+
+  <div class="youtube-wrapper" style="padding-bottom: 62.5%;">
+    <iframe src="https://www.youtube.com/embed/YSZBWWJw3mI" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+<p>Many programs are configured using plain-text files known as “dotfiles”
+(because the file names begin with a <code class="language-plaintext highlighter-rouge">.</code>, e.g. <code class="language-plaintext highlighter-rouge">~/.gitconfig</code>, so that they are
+hidden in the directory listing <code class="language-plaintext highlighter-rouge">ls</code> by default).</p>
+
+<p>A lot of the tools you use probably have a lot of settings that can be tuned
+pretty finely. Often times, tools are customized with specialized languages,
+e.g. Vimscript for Vim or the shell’s own language for a shell.</p>
+
+<p>Customizing and adapting your tools to your preferred workflow will make you
+more productive. We advise you to invest time in customizing your tool yourself
+rather than cloning someone else’s dotfiles from GitHub.</p>
+
+<p>You probably have some dotfiles set up already. Some places to look:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">~/.bashrc</code></li>
+  <li><code class="language-plaintext highlighter-rouge">~/.emacs</code></li>
+  <li><code class="language-plaintext highlighter-rouge">~/.vim</code></li>
+  <li><code class="language-plaintext highlighter-rouge">~/.gitconfig</code></li>
+</ul>
+
+<p>Some programs don’t put the files under your home folder directly and instead they put them in a folder under <code class="language-plaintext highlighter-rouge">~/.config</code>.</p>
+
+<p>Dotfiles are not exclusive to command line applications, for instance the <a href="https://mpv.io/">MPV</a> video player can be configured editing files under <code class="language-plaintext highlighter-rouge">~/.config/mpv</code></p>
+
+<h1 id="learning-to-customize-tools">Learning to customize tools</h1>
+
+<p>You can learn about your tool’s settings by reading online documentation or
+<a href="https://en.wikipedia.org/wiki/Man_page">man pages</a>. Another great way is to
+search the internet for blog posts about specific programs, where authors will
+tell you about their preferred customizations. Yet another way to learn about
+customizations is to look through other people’s dotfiles: you can find tons of
+<a href="https://github.com/search?o=desc&amp;q=dotfiles&amp;s=stars&amp;type=Repositories">dotfiles
+repositories</a>
+on GitHub — see the most popular one
+<a href="https://github.com/mathiasbynens/dotfiles">here</a> (we advise you not to blindly
+copy configurations though).</p>
+
+<h1 id="organization">Organization</h1>
+
+<p>How should you organize your dotfiles? They should be in their own folder,
+under version control, and <strong>symlinked</strong> into place using a script. This has
+the benefits of:</p>
+
+<ul>
+  <li><strong>Easy installation</strong>: if you log in to a new machine, applying your
+customizations will only take a minute</li>
+  <li><strong>Portability</strong>: your tools will work the same way everywhere</li>
+  <li><strong>Synchronization</strong>: you can update your dotfiles anywhere and keep them all
+in sync</li>
+  <li><strong>Change tracking</strong>: you’re probably going to be maintaining your dotfiles
+for your entire programming career, and version history is nice to have for
+long-lived projects</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/src
+<span class="nb">mkdir </span>dotfiles
+<span class="nb">cd </span>dotfiles
+git init
+<span class="nb">touch </span>bashrc
+<span class="c"># create a bashrc with some settings, e.g.:</span>
+<span class="c">#     PS1='\w &gt; '</span>
+<span class="nb">touch install
+chmod</span> +x <span class="nb">install</span>
+<span class="c"># insert the following into the install script:</span>
+<span class="c">#     #!/usr/bin/env bash</span>
+<span class="c">#     BASEDIR=$(dirname $0)</span>
+<span class="c">#     cd $BASEDIR</span>
+<span class="c">#</span>
+<span class="c">#     ln -s ${PWD}/bashrc ~/.bashrc</span>
+git add bashrc <span class="nb">install
+</span>git commit <span class="nt">-m</span> <span class="s1">'Initial commit'</span>
+</code></pre></div></div>
+
+<h1 id="advanced-topics">Advanced topics</h1>
+
+<h2 id="machine-specific-customizations">Machine-specific customizations</h2>
+
+<p>Most of the time, you’ll want the same configuration across machines, but
+sometimes, you’ll want a small delta on a particular machine. Here are a couple
+ways you can handle this situation:</p>
+
+<h3 id="branch-per-machine">Branch per machine</h3>
+
+<p>Use version control to maintain a branch per machine. This approach is
+logically straightforward but can be pretty heavyweight.</p>
+
+<h3 id="if-statements">If statements</h3>
+
+<p>If the configuration file supports it, use the equivalent of if-statements to
+apply machine specific customizations. For example, your shell could have something
+like:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">uname</span><span class="si">)</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"Linux"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="o">{</span>do_something <span class="k">else</span><span class="o">}</span><span class="p">;</span> <span class="k">fi</span>
+
+<span class="c"># Darwin is the architecture name for macOS systems</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">uname</span><span class="si">)</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"Darwin"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="o">{</span>do_something<span class="o">}</span><span class="p">;</span> <span class="k">fi</span>
+
+<span class="c"># You can also make it machine specific</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">hostname</span><span class="si">)</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"myServer"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="o">{</span>do_something<span class="o">}</span><span class="p">;</span> <span class="k">fi</span>
+</code></pre></div></div>
+
+<h3 id="includes">Includes</h3>
+
+<p>If the configuration file supports it, make use of includes. For example,
+a <code class="language-plaintext highlighter-rouge">~/.gitconfig</code> can have a setting:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[include]
+    path = ~/.gitconfig_local
+</code></pre></div></div>
+
+<p>And then on each machine, <code class="language-plaintext highlighter-rouge">~/.gitconfig_local</code> can contain machine-specific
+settings. You could even track these in a separate repository for
+machine-specific settings.</p>
+
+<p>This idea is also useful if you want different programs to share some configurations. For instance if you want both <code class="language-plaintext highlighter-rouge">bash</code> and <code class="language-plaintext highlighter-rouge">zsh</code> to share the same set of aliases you can write them under <code class="language-plaintext highlighter-rouge">.aliases</code> and have the following block in both.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Test if ~/.aliases exists and source it</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> ~/.aliases <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">source</span> ~/.aliases
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li>Your instructors’ dotfiles:
+<a href="https://github.com/anishathalye/dotfiles">Anish</a>,
+<a href="https://github.com/jonhoo/configs">Jon</a>,
+<a href="https://github.com/jjgo/dotfiles">Jose</a></li>
+  <li><a href="http://dotfiles.github.io/">GitHub does dotfiles</a>: dotfile frameworks,
+utilities, examples, and tutorials</li>
+  <li><a href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html">Shell startup
+scripts</a>: an
+explanation of the different configuration files used for your shell</li>
+</ul>
+
+<h1 id="exercises">Exercises</h1>
+
+<ol>
+  <li>
+    <p>Create a folder for your dotfiles and set up <a href="/2019/version-control/">version
+control</a>.</p>
+  </li>
+  <li>
+    <p>Add a configuration for at least one program, e.g. your shell, with some
+customization (to start off, it can be something as simple as customizing
+your shell prompt by setting <code class="language-plaintext highlighter-rouge">$PS1</code>).</p>
+  </li>
+  <li>
+    <p>Set up a method to install your dotfiles quickly (and without manual effort)
+on a new machine. This can be as simple as a shell script that calls <code class="language-plaintext highlighter-rouge">ln -s</code>
+for each file, or you could use a <a href="http://dotfiles.github.io/utilities/">specialized
+utility</a>.</p>
+  </li>
+  <li>
+    <p>Test your installation script on a fresh virtual machine.</p>
+  </li>
+  <li>
+    <p>Migrate all of your current tool configurations to your dotfiles repository.</p>
+  </li>
+  <li>
+    <p>Publish your dotfiles on GitHub.</p>
+  </li>
+</ol>
+
+
+<hr>
+
+<div class="small center">
+<p><a href="https://github.com/missing-semester/missing-semester/blob/master/_2019/dotfiles.md">Edit this page</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a>.</p>
+</div>
+
+    </div>
+
+  </body>
+
+</html>
