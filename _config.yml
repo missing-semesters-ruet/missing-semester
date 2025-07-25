@@ -1,7 +1,8 @@
 # Setup
 title: "The Missing Semesters of Your CS"
 description: "Practical tech skills for RUET students — Linux, Git, Debugging, and more."
-url: "https://missing-semesters-ruet.github.io"
+baseurl: "/missing-semester"
+url: "https://missing-semesters-ruet.github.io/"
 author: "The Missing Semesters of your CS @ RUET"
 
 # Settings
